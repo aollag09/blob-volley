@@ -1,5 +1,6 @@
 package serveur;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.net.*;
 
@@ -19,6 +20,17 @@ public class Serveur {
 			e.printStackTrace();
 		}
 	}
+
+	public void setOrdreLocal(int ordre) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Point[] getCoordonnees() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	
 }

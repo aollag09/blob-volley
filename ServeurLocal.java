@@ -13,7 +13,7 @@ public class ServeurLocal implements IServeur {
 	
 	@Override
 	public void envoyerDonnees(int ordre) {
-		s.setOrdreLocal(ordre);
+		this.serveur.setOrdreLocal(ordre);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class ServeurLocal implements IServeur {
 
 	@Override
 	public Point[] recupererDonnees() {
-		return s.getCoordonnees();
+		return this.serveur.getCoordonnees();
 	}
 
 }
