@@ -8,6 +8,8 @@ package interfaceCS;
  */
 public interface IServeur {
 	
+	public static int DELAY = 20;
+	
 	/**
 	 * Constantes qui définissent le type du serveur.
 	 */
