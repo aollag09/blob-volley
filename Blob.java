@@ -18,8 +18,8 @@ public class Blob {
 	public final static double BLOB_BODY_LARGEUR = 0.10;
 	public final static double BLOB_BODY_HAUTEUR = 0.20;
 	/** the eyes */
-	public final static double BLOB_EYES_LARGEUR = 0.10;
-	public final static double BLOB_EYES_HAUTEUR = 0.20;
+	public final static double BLOB_EYES_LARGEUR = 0.02;
+	public final static double BLOB_EYES_HAUTEUR = 0.04;
 	/** the color */
 	public static Color BLOB_SERVEUR_COLOR = Color.blue;
 	public static Color BLOB_CLIENT_COLOR = Color.red;
@@ -57,9 +57,15 @@ public class Blob {
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) );
 		
 		/* On trace ensuite les yeux */
-		if(this.isServeur){
-			
-		}
+		g.setColor(Color.white);
+		int signe = 1;
+		if(!this.isServeur)
+			signe = -1;
+		g.fillOval((int) (positionX+ signe*positionX/4),
+				Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/4, 
+				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width), 
+				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height) );
+		
 	
 		
 	}
