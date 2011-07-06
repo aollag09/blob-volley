@@ -37,7 +37,7 @@ public interface IServeur {
 	
 	/**
 	 * 
-	 * @return les coordonnées des différents éléments
+	 * @return les coordonnées des différents éléments (si null => pas de changement de position)
 	 */
 	public PointSam[] recupererDonnees();
 	

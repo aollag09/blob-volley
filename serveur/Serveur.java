@@ -11,6 +11,7 @@ import java.net.*;
 
 public class Serveur {
 	
+	private int ordreLocal = IServeur.ORDRE_RESTE, ordreDistant = IServeur.ORDRE_RESTE;
 	
 	public Serveur(int port){
 		try {
@@ -38,7 +39,5 @@ public class Serveur {
 		ret[IServeur.BALLE] = Balle.balle.getPosition();
 		return ret;
 	}
-	
-	
 	
 }

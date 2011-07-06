@@ -1,6 +1,8 @@
 package interfaceCS;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -9,12 +11,17 @@ import javax.swing.JOptionPane;
 
 public class ServeurDistant implements IServeur {
 
-	
+	private OutputStream oStream;
+	private InputStream iStream;
 	
 	public ServeurDistant(String adresseIp, int port){
 		
 		try {
 			Socket s = new Socket(adresseIp, port);
+			
+			oStream = s.getOutputStream();
+			iStream = s.getInputStream();
+			
 			
 			
 		} catch (UnknownHostException e) {
@@ -28,8 +35,11 @@ public class ServeurDistant implements IServeur {
 	
 	@Override
 	public void envoyerDonnees(int ordre) {
-		// TODO Auto-generated method stub
-
+		try {
+			this.oStream.write((""+ordre).getBytes());
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "La connexion au serveur n'est plus effective !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override
@@ -39,8 +49,24 @@ public class ServeurDistant implements IServeur {
 
 	@Override
 	public PointSam[] recupererDonnees() {
-		// TODO Auto-generated method stub
-		return null;
+		String ret = "";
+		try {
+			byte[] b = new byte[1000];
+			int bitsRecus = 0;
+			while((bitsRecus = this.iStream.read(b)) >= 0) {
+				ret = new String(b, 0, bitsRecus);
+			}
+		} catch (IOException e){
+			JOptionPane.showMessageDialog(null, "La connexion au serveur n'est plus effective !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+		}
+		if (ret!=""){
+			String[] lesTrois = ret.split(";");
+			
+			return null; 
+		}
+		else {
+			return null;
+		}
 	}
 
 }
