@@ -24,7 +24,7 @@ public class Blob {
 	
 	/** the body */
 	public final static double BLOB_BODY_LARGEUR = 0.10;
-	public final static double BLOB_BODY_HAUTEUR = 0.20;
+	public final static double BLOB_BODY_HAUTEUR = 0.11;
 	/** the eyes */
 	public final static double BLOB_EYES_LARGEUR = 0.02;
 	public final static double BLOB_EYES_HAUTEUR = 0.04;
@@ -62,7 +62,7 @@ public class Blob {
 		
 		g.drawImage (img.getImage(),
 				(int)(Pane.width*position.getX()),
-				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/2 ),
+				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) ),
 				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height),null );
 		
