@@ -2,6 +2,7 @@ package interfaceCS;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import client.Pane;
 
@@ -25,7 +26,7 @@ public class Blob {
 	public final static double BLOB_EYES_LARGEUR = 0.02;
 	public final static double BLOB_EYES_HAUTEUR = 0.04;
 	/** the color */
-	public static Color BLOB_SERVEUR_COLOR = Color.blue;
+	public static Color BLOB_SERVEUR_COLOR = new Color(169,68,164);
 	public static Color BLOB_CLIENT_COLOR = Color.red;
 	
 	/** Le double singleton */
@@ -34,13 +35,13 @@ public class Blob {
 	
 	/* Les variables d'instance */
 	/** Un pourcentage de la largeur pour indiquer la position du blob */
-	private double positionX;
+	private PointSam position;
 	/** Un boolean pour différencier le blob local du blob distant */
 	private boolean isServeur;
 		
 	/* Le constructeur */
 	private Blob(boolean isMe){
-		this.positionX = 1/2;
+		this.position = new PointSam();
 		this.setIsServeur(isMe);
 	}
 	
@@ -55,7 +56,7 @@ public class Blob {
 			g.setColor(BLOB_CLIENT_COLOR);
 		
 		/* On trace dans un premier temps le body */
-		g.fillOval ((int)(Pane.width*positionX),
+		g.fillOval ((int)(Pane.width*position.getX()),
 				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/2 ),
 				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) );
@@ -65,7 +66,7 @@ public class Blob {
 		int signe = 1;
 		if(!this.isServeur)
 			signe = -1;
-		g.fillOval((int) (positionX+ signe*positionX/4),
+		g.fillOval((int) (position.getX()+ signe*BLOB_BODY_LARGEUR/4),
 				Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/4, 
 				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height) );
@@ -75,13 +76,13 @@ public class Blob {
 	}
 
 
-	public double getPositionX() {
-		return positionX;
+	public PointSam getPosition() {
+		return position;
 	}
 
 
-	public void setPositionX(double positionX) {
-		this.positionX = positionX;
+	public void setPosition(PointSam p) {
+		this.position = p;
 	}
 
 
