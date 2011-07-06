@@ -80,7 +80,7 @@ public class IServeur {
 	public IServeur(){
 		this.local = SERVEUR_LOCAL;
 		this.addr = "localhost";
-		this.port = Serveur.serveur.getPort();
+		this.port = Main.port;
 		
 		demarrage();
 	}

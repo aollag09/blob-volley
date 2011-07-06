@@ -19,7 +19,7 @@ import client.Main;
  * @author pyrrha
  *
  */
-public class Serveur {
+public class Serveur implements Runnable {
 	
 	/**
 	 * Pattern singleton du serveur
@@ -66,14 +66,15 @@ public class Serveur {
 			JOptionPane.showMessageDialog(null, "Impossible de créer le serveur !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @return le port du serveur
+	 * Thread runnable pour mettre le serveur en multithreading.
 	 */
-	public int getPort(){
-		return this.port;
+	public void run() {
+		if (Main.port!=0)
+			this.serveur = new Serveur(Main.port);
 	}
+	
 	
 	public static void main(String[] a){
 		System.out.println("Demarrage du serveur");
