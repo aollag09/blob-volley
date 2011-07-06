@@ -1,6 +1,8 @@
 package serveur;
 
 import interfaceCS.Blob;
+import interfaceCS.IServeur;
+import interfaceCS.PointSam;
 
 import java.awt.Point;
 import java.io.IOException;
@@ -26,13 +28,15 @@ public class Serveur {
 	}
 
 	public void setOrdreLocal(int ordre) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	public Point[] getCoordonnees() {
-		// TODO Auto-generated method stub
-		return null;
+	public PointSam[] getCoordonnees() {
+		PointSam[] ret = new PointSam[3];
+		ret[IServeur.JOUEUR_LOCAL] = Blob.blobServeur.getPosition();
+		ret[IServeur.JOUEUR_DISTANT] = Blob.blobClient.getPosition();
+		ret[IServeur.BALLE] = Balle.balle.getPosition();
+		return ret;
 	}
 	
 	

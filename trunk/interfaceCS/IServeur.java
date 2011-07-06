@@ -1,6 +1,5 @@
 package interfaceCS;
 
-import java.awt.Point;
 
 /**
  * Interface regroupant les différents connexions possibles au serveur, les fonctions sont générique afin que, quelque soit le type de serveur, le transfert de données se fasse bien.
@@ -40,6 +39,6 @@ public interface IServeur {
 	 * 
 	 * @return les coordonnées des différents éléments
 	 */
-	public Point[] recupererDonnees();
+	public PointSam[] recupererDonnees();
 	
 }

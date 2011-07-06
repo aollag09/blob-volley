@@ -24,7 +24,7 @@ public class ServeurLocal implements IServeur {
 	}
 
 	@Override
-	public Point[] recupererDonnees() {
+	public PointSam[] recupererDonnees() {
 		return this.serveur.getCoordonnees();
 	}
 
