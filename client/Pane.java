@@ -1,5 +1,6 @@
 package client;
 import interfaceCS.Blob;
+import interfaceCS.PointSam;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,7 +35,7 @@ public class Pane extends JPanel {
 		
 		
 		Blob.blobServeur.paintBlob(g);
-		Blob.blobClient.setPositionX(0.9);
+		Blob.blobClient.setPosition(new PointSam(0.9,0.0));
 		Blob.blobClient.paintBlob(g);
 	
 		
