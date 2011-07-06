@@ -5,14 +5,15 @@ import javax.swing.JPanel;
 
 public class Pane extends JPanel {
 	
-	/* La taille du panel qui peut être variable */
+	/* La taille du panel qui peut ï¿½tre variable */
 	public static int width = 500;
 	public static int height = 300;
 	
 	
 	
 	public Pane(){
-		
+		super();
+		this.setSize(width, height);
 	}
 	
 	
@@ -20,6 +21,8 @@ public class Pane extends JPanel {
 		width = getWidth();
 		height = getHeight();
 		
+		
+		g.drawString("caca test",(int) width/3, (int) height/2);
 		
 		
 	}
