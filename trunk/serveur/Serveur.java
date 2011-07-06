@@ -1,10 +1,14 @@
 package serveur;
 
+import interfaceCS.Blob;
+
 import java.awt.Point;
 import java.io.IOException;
 import java.net.*;
 
+
 public class Serveur {
+	
 	
 	public Serveur(int port){
 		try {
