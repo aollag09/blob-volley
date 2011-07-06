@@ -1,0 +1,20 @@
+CLIENT :
+
+							 Serveur Local (échange de données en local)
+						       _ 	
+						      //
+Client (affichage, commandes) <=> Interface Serveur <=
+						      \\
+						       -
+							 Serveur Distant (protocole Réseau)
+
+
+
+
+SERVEUR :
+
+
+
+
+
+Inteface Serveur <=> Serveur
