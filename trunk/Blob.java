@@ -13,26 +13,31 @@ import java.awt.Graphics;
 public class Blob {
 	
 	/* Les constantes */
-	public final static double BLOB_LARGEUR = 0.10;
-	public final static double BLOB_HAUTEUR = 0.20;
 	
-	public static Color BLOB_ME_COLOR = Color.blue;
-	public static Color BLOB_ADVERSAIRE_COLOR = Color.red;
+	/** the body */
+	public final static double BLOB_BODY_LARGEUR = 0.10;
+	public final static double BLOB_BODY_HAUTEUR = 0.20;
+	/** the eyes */
+	public final static double BLOB_EYES_LARGEUR = 0.10;
+	public final static double BLOB_EYES_HAUTEUR = 0.20;
+	/** the color */
+	public static Color BLOB_SERVEUR_COLOR = Color.blue;
+	public static Color BLOB_CLIENT_COLOR = Color.red;
 	
-	/* Le double singleton */
-	public static Blob blobMe = new Blob(true);
-	public static Blob blobAdversaire = new Blob(false);
+	/** Le double singleton */
+	public static Blob blobServeur = new Blob(true);
+	public static Blob blobClient = new Blob(false);
 	
 	/* Les variables d'instance */
 	/** Un pourcentage de la largeur pour indiquer la position du blob */
 	private double positionX;
 	/** Un boolean pour différencier le blob local du blob distant */
-	private boolean isMe;
+	private boolean isServeur;
 		
 	/* Le constructeur */
 	private Blob(boolean isMe){
 		this.positionX = 1/2;
-		this.setMe(isMe);
+		this.setIsServeur(isMe);
 	}
 	
 	
@@ -40,17 +45,19 @@ public class Blob {
 	public void paintBlob(Graphics g){
 		
 		/* On choisie la couleur de dessin en fonction du blob à déssiner */
-		
+		if(this.isServeur)
+			g.setColor(BLOB_SERVEUR_COLOR);
+		else
+			g.setColor(BLOB_CLIENT_COLOR);
 		
 		/* On trace dans un premier temps le body */
 		g.fillOval ((int)(Pane.width*positionX),
-				(int)(Pane.height - (int)(Blob.BLOB_HAUTEUR*Pane.height)/2 ),
-				(int)(Blob.BLOB_LARGEUR*(Pane.width+0.0)), 
-				(int)(Blob.BLOB_HAUTEUR*Pane.height));
+				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/2 ),
+				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
+				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) );
 		
 		/* On trace ensuite les yeux */
-		
-		if(this.isMe){
+		if(this.isServeur){
 			
 		}
 	
@@ -68,13 +75,13 @@ public class Blob {
 	}
 
 
-	public boolean isMe() {
-		return isMe;
+	public boolean isServeur() {
+		return isServeur;
 	}
 
 
-	public void setMe(boolean isMe) {
-		this.isMe = isMe;
+	public void setIsServeur(boolean isMe) {
+		this.isServeur = isMe;
 	}
 	
 	
