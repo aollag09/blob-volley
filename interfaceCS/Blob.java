@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.Stack;
 
 import javax.swing.ImageIcon;
 
@@ -16,7 +17,6 @@ import client.Pane;
  * La classe qui va permettre de creer les deux blob
  * C'est un double singleton 
  * @author Amaury
- *
  */
 public class Blob {
 	
@@ -41,11 +41,22 @@ public class Blob {
 	private PointSam position;
 	/** Un boolean pour diffÃ©rencier le blob local du blob distant */
 	private boolean isServeur;
+	/** Un vecteur de position de type LIFO qui va garder les 3 dernières position afin de déterminer
+	 * la vitesse et l'accélération du blob */
+	private Stack<PointSam> historique;
+	/** La vitesse du blob */
+	private double vitesse;
+	/** L'accélération du blob */
+	private double acceleration;
 		
 	/* Le constructeur */
 	private Blob(boolean isMe){
 		this.position = new PointSam();
 		this.setIsServeur(isMe);
+		this.vitesse = 0;
+		this.acceleration = 0;
+		this.historique.add(new PointSam());
+		
 	}
 	
 	
@@ -98,6 +109,62 @@ public class Blob {
 
 	public void setIsServeur(boolean isMe) {
 		this.isServeur = isMe;
+	}
+
+
+	/**
+	 * @return the historique
+	 */
+	public Stack<PointSam> getHistorique() {
+		return historique;
+	}
+
+
+	/**
+	 * @param historique the historique to set
+	 */
+	public void setHistorique(Stack<PointSam> historique) {
+		this.historique = historique;
+	}
+
+
+	/**
+	 * @return the vitesse
+	 */
+	public double getVitesse() {
+		return vitesse;
+	}
+
+
+	/**
+	 * @param vitesse the vitesse to set
+	 */
+	public void setVitesse(double vitesse) {
+		this.vitesse = vitesse;
+	}
+
+
+	/**
+	 * @return the acceleration
+	 */
+	public double getAcceleration() {
+		return acceleration;
+	}
+
+
+	/**
+	 * @param acceleration the acceleration to set
+	 */
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
+	}
+
+
+	/**
+	 * @param isServeur the isServeur to set
+	 */
+	public void setServeur(boolean isServeur) {
+		this.isServeur = isServeur;
 	}
 	
 	

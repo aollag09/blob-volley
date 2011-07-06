@@ -16,8 +16,8 @@ public class Pane extends JPanel {
 	public static Color BACKGROUND_COLOR = new Color(0,163,232);
 	
 	/* La taille du panel qui peut être variable */
-	public static int width = 500;
-	public static int height = 300;
+	public static int width = 913;
+	public static int height = 407;
 	
 	
 	
@@ -31,7 +31,7 @@ public class Pane extends JPanel {
 		/* Actualisation des dimensions de la fenêtre */
 		width = getWidth();
 		height = getHeight();
-		
+
 		/* Création du terrain */
 		
 		/* BackGround */
@@ -44,6 +44,7 @@ public class Pane extends JPanel {
 				(int)(height - height/8), 
 				(int)(width/50),
 				(int) (height/8));
+		
 		
 		Blob.blobServeur.paintBlob(g);
 		Blob.blobClient.setPosition(new PointSam(0.9,0.0));
