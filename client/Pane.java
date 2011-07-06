@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 
 public class Pane extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
+
 	/* La taille du panel qui peut être variable */
 	public static int width = 500;
 	public static int height = 300;
