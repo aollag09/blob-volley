@@ -2,7 +2,10 @@ package interfaceCS;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+
+import javax.swing.ImageIcon;
 
 import client.Pane;
 
@@ -50,19 +53,21 @@ public class Blob {
 	public void paintBlob(Graphics g){
 		
 		/* On choisie la couleur de dessin en fonction du blob à déssiner */
-		if(this.isServeur)
-			g.setColor(BLOB_SERVEUR_COLOR);
-		else
-			g.setColor(BLOB_CLIENT_COLOR);
-		
 		/* On trace dans un premier temps le body */
-		g.fillOval ((int)(Pane.width*position.getX()),
+		String link = "blobClient.png";
+		if(this.isServeur)
+			link = "blobServeur.png";
+		ImageIcon img = new ImageIcon(link);
+		
+		
+		g.drawImage (img.getImage(),
+				(int)(Pane.width*position.getX()),
 				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/2 ),
 				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
-				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) );
+				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height),null );
 		
 		/* On trace ensuite les yeux */
-		g.setColor(Color.white);
+		/*g.setColor(Color.white);
 		int signe = 1;
 		if(!this.isServeur)
 			signe = -1;
@@ -71,7 +76,7 @@ public class Blob {
 				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height) );
 		
-	
+	*/
 		
 	}
 
