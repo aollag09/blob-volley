@@ -38,7 +38,12 @@ public class Pane extends JPanel {
 		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, width, height);
 		
-		
+		/* Création du filet */
+		g.setColor(Color.black);
+		g.fillRect((int) (width/2 - width/100), 
+				(int)(height - height/8), 
+				(int)(width/50),
+				(int) (height/8));
 		
 		Blob.blobServeur.paintBlob(g);
 		Blob.blobClient.setPosition(new PointSam(0.9,0.0));
