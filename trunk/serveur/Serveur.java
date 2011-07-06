@@ -28,7 +28,7 @@ public class Serveur {
 	}
 
 	public void setOrdreLocal(int ordre) {
-		
+		this.ordreLocal = ordre;
 	}
 
 	public PointSam[] getCoordonnees() {
