@@ -28,4 +28,8 @@ public class ServeurLocal implements IServeur {
 		return this.serveur.getCoordonnees();
 	}
 
+	@Override
+	public void fermerServeur() {
+	}
+
 }

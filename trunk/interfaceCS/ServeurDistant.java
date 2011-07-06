@@ -13,15 +13,15 @@ public class ServeurDistant implements IServeur {
 
 	private OutputStream oStream;
 	private InputStream iStream;
+	private Socket s;
 	
 	public ServeurDistant(String adresseIp, int port){
 		
 		try {
-			Socket s = new Socket(adresseIp, port);
+			s = new Socket(adresseIp, port);
 			
 			oStream = s.getOutputStream();
 			iStream = s.getInputStream();
-			
 			
 			
 		} catch (UnknownHostException e) {
@@ -62,10 +62,54 @@ public class ServeurDistant implements IServeur {
 		if (ret!=""){
 			String[] lesTrois = ret.split(";");
 			
-			return null; 
+			PointSam balle;
+			try {
+				String[] temp = lesTrois[IServeur.BALLE].split(",");
+				balle = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+			} catch (Exception e){
+				balle = new PointSam();
+			}
+			
+			PointSam joueurLocal;
+			try {
+				String[] temp = lesTrois[IServeur.JOUEUR_LOCAL].split(",");
+				joueurLocal = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+			} catch (Exception e){
+				joueurLocal = new PointSam();
+			}
+			
+			PointSam joueurDistant;
+			try {
+				String[] temp = lesTrois[IServeur.JOUEUR_DISTANT].split(",");
+				joueurDistant = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+			} catch (Exception e){
+				joueurDistant = new PointSam();
+			}
+			
+			PointSam[] retour = new PointSam[3];
+			retour[IServeur.BALLE] = balle;
+			retour[IServeur.JOUEUR_DISTANT] = joueurDistant;
+			retour[IServeur.JOUEUR_LOCAL] = joueurLocal;
+			return retour; 
 		}
 		else {
 			return null;
+		}
+	}
+
+	@Override
+	public void fermerServeur() {
+		try {
+			this.oStream.close();
+		} catch (IOException e) {
+		}
+		try {
+			this.iStream.close();
+		} catch (IOException e) {
+		}
+		try {
+			this.s.close();
+		} catch (IOException e) {
 		}
 	}
 
