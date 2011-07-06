@@ -2,7 +2,7 @@ package interfaceCS;
 
 public class PointSam {
 
-	double x,y;
+	private double x,y;
 	
 	public PointSam(){
 		this(0d,0d);
