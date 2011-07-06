@@ -41,4 +41,8 @@ public interface IServeur {
 	 */
 	public PointSam[] recupererDonnees();
 	
+	/**
+	 * Ferme les connexions avec le serveur.
+	 */
+	public void fermerServeur();
 }
