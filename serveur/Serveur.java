@@ -33,9 +33,9 @@ public class Serveur {
 
 	public PointSam[] getCoordonnees() {
 		PointSam[] ret = new PointSam[3];
-		ret[IServeur.JOUEUR_LOCAL] = Blob.blobServeur.getPosition();
-		ret[IServeur.JOUEUR_DISTANT] = Blob.blobClient.getPosition();
-		ret[IServeur.BALLE] = Balle.balle.getPosition();
+		ret[IServeur.JOUEUR_LOCAL] = Blob.instanceServeur.getPosition();
+		ret[IServeur.JOUEUR_DISTANT] = Blob.instanceClient.getPosition();
+		ret[IServeur.BALLE] = Balle.instance.getPosition();
 		return ret;
 	}
 	

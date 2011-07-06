@@ -32,8 +32,8 @@ public class Blob extends Mobile {
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	
 	/** Le double singleton */
-	public static Blob blobServeur = new Blob(true);
-	public static Blob blobClient = new Blob(false);
+	public static Blob instanceServeur = new Blob(true);
+	public static Blob instanceClient = new Blob(false);
 	
 	/* Les variables d'instance */
 	/** Un boolean pour différencier le blob local du blob distant */
