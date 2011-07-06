@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 
 public class Main {
 	
+	public static int port = 0;
+	
 	public static boolean jeuEnCours = true;
 
 	public static void main(String[] args){
