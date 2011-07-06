@@ -7,19 +7,20 @@ public class Mobile {
 	/* Variables d'instances */
 	/** La position courante de la balle */
 	private PointSam position;
-	/** Un vecteur de position de type FIFO qui va garder les 3 dernières position afin de déterminer
-	 * la vitesse et l'accélération du blob */
+	/** Un vecteur de position de type FIFO qui va garder les 3 derniï¿½res position afin de dï¿½terminer
+	 * la vitesse et l'accï¿½lï¿½ration du blob */
 	private LinkedList<PointSam> historique;
 	/** La vitesse du blob */
 	private PointSam vitesse;
-	/** L'accélération du blob */
+	/** L'accï¿½lï¿½ration du blob */
 	private PointSam acceleration;
 	
 	public Mobile(){
 		this.position = new PointSam();
 		this.vitesse = new PointSam();
 		this.acceleration = new PointSam();
-		/* On garde trois points pour calculer la vitesse et l'accélération */
+		/* On garde trois points pour calculer la vitesse et l'accï¿½lï¿½ration */
+		this.historique = new LinkedList<PointSam>();
 		this.historique.add(new PointSam());
 		this.historique.add(new PointSam());
 		this.historique.add(new PointSam());
@@ -34,7 +35,7 @@ public class Mobile {
 		this.position = p;
 		this.historique.pop();
 		this.historique.push(p);
-		/* On redétermine la vitesse actuelle */
+		/* On redï¿½termine la vitesse actuelle */
 		double vitX = (this.historique.get(2).getX()-this.historique.get(1).getX())/IServeur.DELAY;
 		double vitY = (this.historique.get(2).getY()-this.historique.get(1).getY())/IServeur.DELAY;
 		this.vitesse = new PointSam(vitX,vitY);
@@ -45,7 +46,7 @@ public class Mobile {
 		vitY = (this.historique.get(1).getY()-this.historique.get(0).getY())/IServeur.DELAY;
 		aVitesse = new PointSam(vitX,vitY);
 		
-		/* La nouvelle accélération */
+		/* La nouvelle accï¿½lï¿½ration */
 		double accX = (this.vitesse.getX()-aVitesse.getX())/IServeur.DELAY;
 		double accY = (this.vitesse.getY()-aVitesse.getY())/IServeur.DELAY;
 		this.acceleration = new PointSam(accX,accY);
