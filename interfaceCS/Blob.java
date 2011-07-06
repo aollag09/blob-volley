@@ -24,7 +24,7 @@ public class Blob {
 	
 	/** the body */
 	public final static double BLOB_BODY_LARGEUR = 0.10;
-	public final static double BLOB_BODY_HAUTEUR = 0.11;
+	public final static double BLOB_BODY_HAUTEUR = 0.09;
 	/** the eyes */
 	public final static double BLOB_EYES_LARGEUR = 0.02;
 	public final static double BLOB_EYES_HAUTEUR = 0.04;
