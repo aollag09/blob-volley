@@ -1,6 +1,5 @@
 package interfaceCS;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -35,7 +34,6 @@ public class ServeurDistant implements IServeur {
 
 	@Override
 	public int getTypeServeur() {
-		// TODO Auto-generated method stub
 		return IServeur.SERVEUR_DISTANT;
 	}
 
