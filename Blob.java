@@ -10,6 +10,8 @@
 public class Blob {
 	
 	/* Les constantes */
+	public final static BLOB_LARGEUR = 0.20;
+	public final static BLOB_HAUTEUR = 0.30;
 	
 	/* Le double singleton */
 	public static Blob blobMe = new Blob();
