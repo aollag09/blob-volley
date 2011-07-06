@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.util.Stack;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
@@ -18,10 +18,9 @@ import client.Pane;
  * C'est un double singleton 
  * @author Amaury
  */
-public class Blob {
+public class Blob extends Mobile {
 	
 	/* Les constantes */
-	
 	/** the body */
 	public final static double BLOB_BODY_LARGEUR = 0.10;
 	public final static double BLOB_BODY_HAUTEUR = 0.09;
@@ -37,26 +36,16 @@ public class Blob {
 	public static Blob blobClient = new Blob(false);
 	
 	/* Les variables d'instance */
-	/** Un pourcentage de la largeur pour indiquer la position du blob */
-	private PointSam position;
 	/** Un boolean pour diffÃ©rencier le blob local du blob distant */
 	private boolean isServeur;
-	/** Un vecteur de position de type LIFO qui va garder les 3 dernières position afin de déterminer
-	 * la vitesse et l'accélération du blob */
-	private Stack<PointSam> historique;
-	/** La vitesse du blob */
-	private double vitesse;
-	/** L'accélération du blob */
-	private double acceleration;
+
 		
+
+
 	/* Le constructeur */
-	private Blob(boolean isMe){
-		this.position = new PointSam();
-		this.setIsServeur(isMe);
-		this.vitesse = 0;
-		this.acceleration = 0;
-		this.historique.add(new PointSam());
-		
+	private Blob(boolean isServeur){
+		super();
+		this.setServeur(isServeur);
 	}
 	
 	
@@ -72,7 +61,7 @@ public class Blob {
 		
 		
 		g.drawImage (img.getImage(),
-				(int)(Pane.width*position.getX()),
+				(int)(Pane.width*super.getPosition().getX()),
 				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) ),
 				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height),null );
@@ -92,71 +81,11 @@ public class Blob {
 	}
 
 
-	public PointSam getPosition() {
-		return position;
-	}
-
-
-	public void setPosition(PointSam p) {
-		this.position = p;
-	}
-
-
+	/**
+	 * @return the isServeur
+	 */
 	public boolean isServeur() {
 		return isServeur;
-	}
-
-
-	public void setIsServeur(boolean isMe) {
-		this.isServeur = isMe;
-	}
-
-
-	/**
-	 * @return the historique
-	 */
-	public Stack<PointSam> getHistorique() {
-		return historique;
-	}
-
-
-	/**
-	 * @param historique the historique to set
-	 */
-	public void setHistorique(Stack<PointSam> historique) {
-		this.historique = historique;
-	}
-
-
-	/**
-	 * @return the vitesse
-	 */
-	public double getVitesse() {
-		return vitesse;
-	}
-
-
-	/**
-	 * @param vitesse the vitesse to set
-	 */
-	public void setVitesse(double vitesse) {
-		this.vitesse = vitesse;
-	}
-
-
-	/**
-	 * @return the acceleration
-	 */
-	public double getAcceleration() {
-		return acceleration;
-	}
-
-
-	/**
-	 * @param acceleration the acceleration to set
-	 */
-	public void setAcceleration(double acceleration) {
-		this.acceleration = acceleration;
 	}
 
 
@@ -166,6 +95,6 @@ public class Blob {
 	public void setServeur(boolean isServeur) {
 		this.isServeur = isServeur;
 	}
-	
+
 	
 }
