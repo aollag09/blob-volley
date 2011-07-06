@@ -22,13 +22,8 @@ public class Pane extends JPanel {
 		/* Actualisation des dimensions de la fenêtre */
 		width = getWidth();
 		height = getHeight();
-		
-		
-		
-		g.setColor(Color.RED);
 		Blob.blobMe.paintBlob(g);
 		Blob.blobAdversaire.setPositionX(0.9);
-		g.setColor(Color.BLUE);
 		Blob.blobAdversaire.paintBlob(g);
 	
 		
