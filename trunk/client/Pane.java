@@ -46,9 +46,9 @@ public class Pane extends JPanel {
 				(int) (height/8));
 		
 		
-		Blob.blobServeur.paintBlob(g);
-		Blob.blobClient.setPosition(new PointSam(0.9,0.0));
-		Blob.blobClient.paintBlob(g);
+		Blob.instanceServeur.paintBlob(g);
+		Blob.instanceClient.setPosition(new PointSam(0.9,0.0));
+		Blob.instanceClient.paintBlob(g);
 	
 		
 	}

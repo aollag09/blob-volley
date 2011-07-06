@@ -21,11 +21,23 @@ public class Mobile {
 		this.acceleration = new PointSam();
 		/* On garde trois points pour calculer la vitesse et l'accï¿½lï¿½ration */
 		this.historique = new LinkedList<PointSam>();
+		this.historique = new LinkedList<PointSam>();
 		this.historique.add(new PointSam());
 		this.historique.add(new PointSam());
 		this.historique.add(new PointSam());
 	}
 	
+	
+	public Mobile(PointSam p){
+		this.position = p;
+		this.vitesse = new PointSam(1,2);
+		this.acceleration = new PointSam();
+		/* On garde trois points pour calculer la vitesse et l'accélération */
+		this.historique = new LinkedList<PointSam>();
+		this.historique.add(p);
+		this.historique.add(p);
+		this.historique.add(p);
+	}
 	
 	public PointSam getPosition() {
 		return position;
