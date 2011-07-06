@@ -4,9 +4,10 @@ import interfaceCS.Blob;
 import interfaceCS.IServeur;
 import interfaceCS.PointSam;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.net.*;
+
+import javax.swing.JOptionPane;
 
 
 public class Serveur {
@@ -21,8 +22,7 @@ public class Serveur {
 			client.close();
 			server.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Impossible de créer le serveur !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
