@@ -1,5 +1,6 @@
 package serveur;
 
+import interfaceCS.Balle;
 import interfaceCS.Blob;
 import interfaceCS.IServeur;
 import interfaceCS.PointSam;
@@ -34,7 +35,7 @@ public class Serveur {
 		PointSam[] ret = new PointSam[3];
 		ret[IServeur.JOUEUR_LOCAL] = Blob.blobServeur.getPosition();
 		ret[IServeur.JOUEUR_DISTANT] = Blob.blobClient.getPosition();
-		//ret[IServeur.BALLE] = Balle.balle.getPosition();
+		ret[IServeur.BALLE] = Balle.balle.getPosition();
 		return ret;
 	}
 	
