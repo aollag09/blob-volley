@@ -28,9 +28,9 @@ public class Blob {
 	/** the eyes */
 	public final static double BLOB_EYES_LARGEUR = 0.02;
 	public final static double BLOB_EYES_HAUTEUR = 0.04;
-	/** the color */
-	public static Color BLOB_SERVEUR_COLOR = new Color(169,68,164);
-	public static Color BLOB_CLIENT_COLOR = Color.red;
+	/** the link */
+	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
+	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	
 	/** Le double singleton */
 	public static Blob blobServeur = new Blob(true);
@@ -54,9 +54,9 @@ public class Blob {
 		
 		/* On choisie la couleur de dessin en fonction du blob à déssiner */
 		/* On trace dans un premier temps le body */
-		String link = "blobClient.png";
+		String link = LINK_BLOB_CLIENT;
 		if(this.isServeur)
-			link = "blobServeur.png";
+			link = LINK_BLOB_SERVEUR;
 		ImageIcon img = new ImageIcon(link);
 		
 		
