@@ -22,9 +22,15 @@ public class Pane extends JPanel {
 		/* Actualisation des dimensions de la fenêtre */
 		width = getWidth();
 		height = getHeight();
-		Blob.blobMe.paintBlob(g);
-		Blob.blobAdversaire.setPositionX(0.9);
-		Blob.blobAdversaire.paintBlob(g);
+		
+		/* Création du terrain */
+		//g.drawRect(width-width/20, y, width, height)
+		
+		
+		
+		Blob.blobServeur.paintBlob(g);
+		Blob.blobClient.setPositionX(0.9);
+		Blob.blobClient.paintBlob(g);
 	
 		
 	}
