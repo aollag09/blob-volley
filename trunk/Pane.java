@@ -24,6 +24,9 @@ public class Pane extends JPanel {
 		height = getHeight();
 		
 		/* Création du terrain */
+		
+		/* Le background */
+		
 		//g.drawRect(width-width/20, y, width, height)
 		
 		
