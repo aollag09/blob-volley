@@ -43,7 +43,7 @@ public class Mobile {
 		return position;
 	}
 	
-	public void setPositon(PointSam p){
+	public void setPosition(PointSam p){
 		this.position = p;
 	}
 
