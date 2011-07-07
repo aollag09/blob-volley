@@ -32,7 +32,7 @@ public class Mobile {
 		this.position = p;
 		this.vitesse = new PointSam();
 		this.acceleration = new PointSam();
-		/* On garde trois points pour calculer la vitesse et l'accélération */
+		/* On garde trois points pour calculer la vitesse et l'accï¿½lï¿½ration */
 		this.historique = new LinkedList<PointSam>();
 		this.historique.add(p);
 		this.historique.add(p);
@@ -48,8 +48,8 @@ public class Mobile {
 	}
 
 	/**
-	 * Méthode permettant de fixer le nouvelle position et ainsi de recalculer la nouvelle vitesse
-	 * ainsi que la nouvelle accélération
+	 * Mï¿½thode permettant de fixer le nouvelle position et ainsi de recalculer la nouvelle vitesse
+	 * ainsi que la nouvelle accï¿½lï¿½ration
 	 */
 	public void nouvellePosition(PointSam p) {
 		this.position = p;
@@ -73,8 +73,8 @@ public class Mobile {
 	}
 	
 	/**
-	 * Méthode permetant de fixer la nouvelle vitesse et ainsi de recalculer la nouvelle position
-	 * ainsi que la nouvelle accélération
+	 * Mï¿½thode permetant de fixer la nouvelle vitesse et ainsi de recalculer la nouvelle position
+	 * ainsi que la nouvelle accï¿½lï¿½ration
 	 */
 	public void nouvelleVitesse(PointSam newV){
 		this.vitesse = newV;
@@ -100,7 +100,7 @@ public class Mobile {
 	}
 	
 	/** 
-	 * Méthode permettant de fixer la nouvelle accélération et ainsi de recalculer la nouvelle 
+	 * Mï¿½thode permettant de fixer la nouvelle accï¿½lï¿½ration et ainsi de recalculer la nouvelle 
 	 * vitesse ainsi que la nouvelle position 
 	 */
 	public void nouvelleAcceleration(PointSam newA){
@@ -111,7 +111,7 @@ public class Mobile {
 		double vitY = this.vitesse.getY() + this.acceleration.getY()*((IServeur.DELAY+0.0)/1000);
 		this.vitesse = new PointSam(vitX, vitY);
 		
-		/* On détermine alors le nouveau point */
+		/* On dï¿½termine alors le nouveau point */
 		double pointX =  this.historique.get(2).getX() + this.vitesse.getX()*((IServeur.DELAY+0.0)/1000);
 		double pointY =  this.historique.get(2).getY() + this.vitesse.getY()*((IServeur.DELAY+0.0)/1000);
 		PointSam p =  new PointSam(pointX, pointY);
