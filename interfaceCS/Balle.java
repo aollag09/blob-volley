@@ -83,7 +83,7 @@ public class Balle extends Mobile{
 		
 		
 		/* On modifie la positon de la balle avec sa nouvelle position */
-		super.setPosition(newPosition);
+		super.nouvellePosition(newPosition);
 
 	}
 
