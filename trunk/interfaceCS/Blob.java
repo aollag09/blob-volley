@@ -32,6 +32,7 @@ public class Blob extends Mobile {
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	/** bornes accï¿½lï¿½ration */
 	public static double MAX_ACCELERATION = 1;
+	public static double SAUT_ACCELERATION = 4;
 
 
 	/** Le double singleton */
@@ -41,11 +42,14 @@ public class Blob extends Mobile {
 	/* Les variables d'instance */
 	/** Un boolean pour diffÃ©rencier le blob local du blob distant */
 	private boolean isServeur;
+	/** Un boolean pour savoir si le blob est en train de sauter */
+	private boolean isJumping;
 
 	/* Le constructeur */
 	private Blob(boolean isServeur){
 		super();
 		this.setServeur(isServeur);
+		this.isJumping = false;
 	}
 
 
@@ -104,7 +108,10 @@ public class Blob extends Mobile {
 
 		case IServeur.ORDRE_SAUT :
 			/* On augmente l'accélération vers le haut */
-
+			if(!this.isJumping){
+				this.isJumping = true;
+				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), this.SAUT_ACCELERATION));
+			}
 		}
 
 		if(this.getPosition().getX()<0 ){
@@ -113,9 +120,25 @@ public class Blob extends Mobile {
 			super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
 			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 		}
-		if(this.getPosition().getX()>(Pane.width/2)-Blob.BLOB_BODY_LARGEUR*Pane.width){
-
+		if(this.getPosition().getX()>(int) (Pane.width/2 - Pane.width/100)){
+			System.out.println("Ok");
 		}
+	}
+
+
+	/**
+	 * @return the isJumping
+	 */
+	public boolean isJumping() {
+		return isJumping;
+	}
+
+
+	/**
+	 * @param isJumping the isJumping to set
+	 */
+	public void setJumping(boolean isJumping) {
+		this.isJumping = isJumping;
 	}
 
 
