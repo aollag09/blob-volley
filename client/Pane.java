@@ -1,5 +1,6 @@
 package client;
 import interfaceCS.Blob;
+import interfaceCS.IServeur;
 import interfaceCS.PointSam;
 
 import java.awt.Color;
@@ -13,6 +14,8 @@ import javax.swing.JPanel;
 public class Pane extends JPanel implements KeyListener {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public static Pane instance = new Pane();
 
 	/** La couleur du background */
 	public static Color BACKGROUND_COLOR = new Color(0,163,232);
@@ -21,11 +24,12 @@ public class Pane extends JPanel implements KeyListener {
 	public static int width = 1060;
 	public static int height = 525;
 	
-	
+	private int ordre;
 	
 	public Pane(){
 		super();
 		this.setSize(width, height);
+		this.ordre = IServeur.ORDRE_RESTE;
 	}
 	
 	
@@ -60,10 +64,12 @@ public class Pane extends JPanel implements KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
 		switch(key){
-		case KeyEvent.VK_LEFT : System.out.println("left");break;
-		case KeyEvent.VK_RIGHT : System.out.println("right");break;
-		case KeyEvent.VK_SPACE : System.out.println("space");break;
+		case KeyEvent.VK_LEFT :  this.ordre = IServeur.ORDRE_GAUCHE;break;
+		case KeyEvent.VK_RIGHT : this.ordre = IServeur.ORDRE_DROITE;break;
+		case KeyEvent.VK_SPACE : this.ordre = IServeur.ORDRE_SAUT;break;
 		}
+		Blob.instanceServeur.nextPosition(ordre);
+		this.repaint();
 	}
 
 
@@ -78,6 +84,22 @@ public class Pane extends JPanel implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	/**
+	 * @return the ordre
+	 */
+	public int getOrdre() {
+		return ordre;
+	}
+
+
+	/**
+	 * @param ordre the ordre to set
+	 */
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
 	}
 
 }

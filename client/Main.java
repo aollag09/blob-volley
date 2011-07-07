@@ -23,9 +23,8 @@ public class Main {
 	public static void main(String[] args){
 
 		JFrame f = new JFrame();
-		Pane p = new Pane();
-		f.add(p);
-		f.addKeyListener(p);
+		f.add(Pane.instance);
+		f.addKeyListener(Pane.instance);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(1060,525);
 		f.setVisible(true);

@@ -30,6 +30,9 @@ public class Blob extends Mobile {
 	/** the link */
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
+	/** bornes accélération */
+	public static double MAX_ACCELERATION = 2;
+	
 	
 	/** Le double singleton */
 	public static Blob instanceServeur = new Blob(true);
@@ -38,9 +41,6 @@ public class Blob extends Mobile {
 	/* Les variables d'instance */
 	/** Un boolean pour diffÃ©rencier le blob local du blob distant */
 	private boolean isServeur;
-
-		
-
 
 	/* Le constructeur */
 	private Blob(boolean isServeur){
@@ -82,7 +82,26 @@ public class Blob extends Mobile {
 	public void nextPosition(int typeOrdre){
 		switch(typeOrdre){
 		
+		case IServeur.ORDRE_RESTE : 
+			/* On diminue par 2 la vitesse suivant l'axe des X */
+			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/2, this.getVitesse().getY()));
+			break;
+			
+		case IServeur.ORDRE_GAUCHE :
+			/* On augmente l'accélaréation vers la gauche */
+			super.nouvelleAcceleration(new PointSam(
+					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-0.5 ),
+					this.getAcceleration().getY()));		
+			break;
+			
+		case IServeur.ORDRE_DROITE :
+			/* On augmente l'accélaréation vers la gauche */
+			super.nouvelleAcceleration(new PointSam(
+					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.5 ),
+					this.getAcceleration().getY()));		
+			break;
 		}
+		
 	}
 
 
