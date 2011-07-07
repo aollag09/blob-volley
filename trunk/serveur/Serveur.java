@@ -3,7 +3,6 @@ package serveur;
 import interfaceCS.Balle;
 import interfaceCS.Blob;
 import interfaceCS.IServeur;
-import interfaceCS.PointSam;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
