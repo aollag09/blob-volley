@@ -63,6 +63,7 @@ public class Pane extends JPanel implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
+		this.ordre = IServeur.ORDRE_RESTE;
 		switch(key){
 		case KeyEvent.VK_LEFT :  this.ordre = IServeur.ORDRE_GAUCHE;break;
 		case KeyEvent.VK_RIGHT : this.ordre = IServeur.ORDRE_DROITE;break;
