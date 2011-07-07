@@ -100,10 +100,12 @@ public class Blob extends Mobile {
 			break;
 
 		case IServeur.ORDRE_DROITE :
-			/* On augmente l'acc�lar�ation vers la gauche */
-			super.nouvelleAcceleration(new PointSam(
-					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.2),
-					this.getAcceleration().getY()));		
+			if((this.getPosition().getX()+ Blob.BLOB_BODY_LARGEUR)*Pane.width <((Pane.width/2 - Pane.width/100)) ){
+				/* On augmente l'acc�lar�ation vers la gauche */
+				super.nouvelleAcceleration(new PointSam(
+						Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.2),
+						this.getAcceleration().getY()));
+			}
 			break;
 
 		case IServeur.ORDRE_SAUT :
@@ -114,14 +116,17 @@ public class Blob extends Mobile {
 			}
 		}
 
-		if(this.getPosition().getX()<0 ){
+		if(this.getPosition().getX()*Pane.width<0 ){
 			/* On stoppe le blob en X */
 			this.setPositon(new PointSam(0, this.getPosition().getY()));
 			super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
 			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 		}
-		if(this.getPosition().getX()>(int) (Pane.width/2 - Pane.width/100)){
-			System.out.println("Ok");
+		if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width>(int) (Pane.width/2 - Pane.width/100)){
+			this.setPositon(new PointSam( ((Pane.width/2 - Pane.width/100)) /  Pane.width
+					, this.getPosition().getY()));
+			super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
+			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 		}
 	}
 

@@ -65,7 +65,6 @@ public class Pane extends JPanel implements KeyListener {
 		
 		
 		Blob.instanceServeur.paintBlob(g);
-		Blob.instanceClient.nouvellePosition(new PointSam(0.9,0.0));
 		Blob.instanceClient.paintBlob(g);
 	
 		
