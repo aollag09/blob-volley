@@ -46,7 +46,7 @@ public class Mobile {
 	public void setPosition(PointSam p) {
 		this.position = p;
 		this.historique.pop();
-		this.historique.push(p);
+		this.historique.addLast(p);
 		/* On red�termine la vitesse actuelle */
 		double vitX = (this.historique.get(2).getX()-this.historique.get(1).getX())/IServeur.DELAY;
 		double vitY = (this.historique.get(2).getY()-this.historique.get(1).getY())/IServeur.DELAY;
@@ -54,9 +54,9 @@ public class Mobile {
 		
 		/* L'ancienneVitesse */
 		PointSam aVitesse;
-		vitX = (this.historique.get(1).getX()-this.historique.get(0).getX())/IServeur.DELAY;
-		vitY = (this.historique.get(1).getY()-this.historique.get(0).getY())/IServeur.DELAY;
-		aVitesse = new PointSam(vitX,vitY);
+		double avitX = (this.historique.get(1).getX()-this.historique.get(0).getX())/IServeur.DELAY;
+		double avitY = (this.historique.get(1).getY()-this.historique.get(0).getY())/IServeur.DELAY;
+		aVitesse = new PointSam(avitX,avitY);
 		
 		/* La nouvelle acc�l�ration */
 		double accX = (this.vitesse.getX()-aVitesse.getX())/IServeur.DELAY;
