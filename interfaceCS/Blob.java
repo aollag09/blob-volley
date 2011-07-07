@@ -143,7 +143,7 @@ public class Blob extends Mobile {
 			this.setAcceleration(new PointSam(super.getAcceleration().getX(),0));
 			this.setJumping(false);
 		}
-		if((this.getPosition().getY()<0)){
+		if((this.getPosition().getY()<Blob.BLOB_BODY_HAUTEUR)){
 			this.setPosition(new PointSam(this.getPosition().getX(),0));
 			this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),0));
 			this.setAcceleration(new PointSam(super.getAcceleration().getX(),0));
