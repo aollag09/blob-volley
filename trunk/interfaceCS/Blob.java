@@ -77,29 +77,33 @@ public class Blob extends Mobile {
 	}
 	
 	public void nextPosition(int typeOrdre){
+
+
+		
+		
 		switch(typeOrdre){
 		
 		case IServeur.ORDRE_RESTE : 
 			/* On diminue par 2 la vitesse suivant l'axe des X */
-			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/1.7, this.getVitesse().getY()));
+			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/1.1, this.getVitesse().getY()));
 			break;
 			
 		case IServeur.ORDRE_GAUCHE :
 			/* On augmente l'acc�lar�ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-8),
+					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-2),
 					this.getAcceleration().getY()));		
 			break;
 			
 		case IServeur.ORDRE_DROITE :
 			/* On augmente l'acc�lar�ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+8),
+					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+2),
 					this.getAcceleration().getY()));		
 			break;
 
 		}
-		
+		System.out.println(typeOrdre);
 	}
 
 
