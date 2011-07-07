@@ -84,7 +84,7 @@ public class Blob extends Mobile {
 		
 		case IServeur.ORDRE_RESTE : 
 			/* On diminue par 2 la vitesse suivant l'axe des X */
-			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/2, this.getVitesse().getY()));
+			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/1.7, this.getVitesse().getY()));
 			break;
 			
 		case IServeur.ORDRE_GAUCHE :
