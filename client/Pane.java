@@ -36,7 +36,6 @@ public class Pane extends JPanel implements KeyListener {
 		ActionListener al = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Blob.instanceServeur.nextPosition(ordre);
-				ordre = IServeur.ORDRE_RESTE;
 				repaint();
 			}
 		};
@@ -75,7 +74,6 @@ public class Pane extends JPanel implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		int key = arg0.getKeyCode();
-		this.ordre = IServeur.ORDRE_RESTE;
 		switch(key){
 		case KeyEvent.VK_LEFT :  this.ordre = IServeur.ORDRE_GAUCHE;break;
 		case KeyEvent.VK_RIGHT : this.ordre = IServeur.ORDRE_DROITE;break;
@@ -86,8 +84,7 @@ public class Pane extends JPanel implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		this.ordre = IServeur.ORDRE_RESTE;
 	}
 
 

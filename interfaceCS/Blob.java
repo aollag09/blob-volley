@@ -71,7 +71,8 @@ public class Blob extends Mobile {
 		int signe = 1;
 		if(!this.isServeur)
 			signe = -1;
-		
+		int centre = 0;
+		//g.drawOval(x, y, 6, 6)
 		
 		
 	}
