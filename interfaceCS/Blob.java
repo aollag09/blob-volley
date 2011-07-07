@@ -30,7 +30,7 @@ public class Blob extends Mobile {
 	/** the link */
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
-	/** bornes accélération */
+	/** bornes accï¿½lï¿½ration */
 	public static double MAX_ACCELERATION = 2;
 	
 	
@@ -67,16 +67,13 @@ public class Blob extends Mobile {
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height),null );
 		
 		/* On trace ensuite les yeux */
-		/*g.setColor(Color.white);
+		g.setColor(Color.black);
 		int signe = 1;
 		if(!this.isServeur)
 			signe = -1;
-		g.fillOval((int) (position.getX()+ signe*BLOB_BODY_LARGEUR/4),
-				Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)/4, 
-				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width), 
-				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height) );
 		
-	*/	
+		
+		
 	}
 	
 	public void nextPosition(int typeOrdre){
@@ -88,14 +85,14 @@ public class Blob extends Mobile {
 			break;
 			
 		case IServeur.ORDRE_GAUCHE :
-			/* On augmente l'accélaréation vers la gauche */
+			/* On augmente l'accï¿½larï¿½ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
 					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-1),
 					this.getAcceleration().getY()));		
 			break;
 			
 		case IServeur.ORDRE_DROITE :
-			/* On augmente l'accélaréation vers la gauche */
+			/* On augmente l'accï¿½larï¿½ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
 					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+1),
 					this.getAcceleration().getY()));		
