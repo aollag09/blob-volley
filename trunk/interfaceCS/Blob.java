@@ -76,8 +76,13 @@ public class Blob extends Mobile {
 				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height) );
 		
-	*/
+	*/	
+	}
+	
+	public void nextPosition(int typeOrdre){
+		switch(typeOrdre){
 		
+		}
 	}
 
 

@@ -4,11 +4,13 @@ import interfaceCS.PointSam;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
 
-public class Pane extends JPanel {
+public class Pane extends JPanel implements KeyListener {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -16,8 +18,8 @@ public class Pane extends JPanel {
 	public static Color BACKGROUND_COLOR = new Color(0,163,232);
 	
 	/* La taille du panel qui peut être variable */
-	public static int width = 913;
-	public static int height = 407;
+	public static int width = 1060;
+	public static int height = 525;
 	
 	
 	
@@ -47,9 +49,30 @@ public class Pane extends JPanel {
 		
 		
 		Blob.instanceServeur.paintBlob(g);
-		Blob.instanceClient.setPosition(new PointSam(0.9,0.0));
+		Blob.instanceClient.nouvellePosition(new PointSam(0.9,0.0));
 		Blob.instanceClient.paintBlob(g);
 	
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
