@@ -18,7 +18,7 @@ public class Balle extends Mobile{
 	/* Constantes */
 	public static final double TAILLE_BALLE = 0.10;
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
-	public static final double MASSE_BALLE = 1;
+	public static final double MASSE_BALLE = 0.01;
 
 	/* Un compteur */
 	/** Cet entier permet d'incrémenter le temps pour calculer les trajectoires de la balle uniquement dans le cas
