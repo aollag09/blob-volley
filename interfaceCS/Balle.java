@@ -20,6 +20,15 @@ public class Balle extends Mobile{
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
 	public static final double MASSE_BALLE = 1;
 
+	/* Un compteur */
+	/** Cet entier permet d'incrémenter le temps pour calculer les trajectoires de la balle uniquement dans le cas
+	 * ou elle est "libre"
+	 * Il est remit à zéro en cas de choque pour recalculer sa trajectoire 
+	 * 
+	 * Le temps dans le compteur est en !!!!!!!!!!!!! SECONDES !!!!!!!!!!!!!!!
+	 */
+	private double compteur = 0;
+	
 	
 	/* Constructeur */
 	private Balle(){
@@ -32,6 +41,7 @@ public class Balle extends Mobile{
 
 	/** Méthode appelé à chaque delay pour recalculer la position de la balle */
 	public void nextPosition(){
+		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
 		PointSam newPosition = new PointSam();
 
 		/* On test dans un premier temps si la balle risque de toucher un blob */
@@ -47,8 +57,8 @@ public class Balle extends Mobile{
 			else{
 				/* Aucun risque de toucher un blob */
 				/* On calcul ainsi les nouveaux coordonnées de la balle simplement en fonction du poids */
-				double posX = super.getPosition().getX() + super.getVitesse().getX()*IServeur.DELAY/1000;
-				double posY = super.getPosition().getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*(IServeur.DELAY)*(IServeur.DELAY)/1000;
+				double posX = super.getPosition().getX() + super.getVitesse().getX()*this.compteur;
+				double posY = super.getPosition().getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*(IServeur.DELAY)*this.compteur;
 				newPosition = new PointSam(posX, posY);
 			}
 		}
@@ -57,6 +67,14 @@ public class Balle extends Mobile{
 		/* On modifie la positon de la balle avec sa nouvelle position */
 		super.setPosition(newPosition);
 
+	}
+
+	public double getCompteur() {
+		return compteur;
+	}
+
+	public void setCompteur(double compteur) {
+		this.compteur = compteur;
 	}
 
 
