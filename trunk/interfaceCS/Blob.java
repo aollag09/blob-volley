@@ -31,7 +31,7 @@ public class Blob extends Mobile {
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	/** bornes acc�l�ration */
-	public static double MAX_ACCELERATION = 3;
+	public static double MAX_ACCELERATION = 1;
 	
 	
 	/** Le double singleton */
@@ -105,11 +105,14 @@ public class Blob extends Mobile {
 
 		}
 		
-		if(this.getPosition().getX()<0 || this.getPosition().getX()>(Pane.width/2)-Blob.BLOB_BODY_LARGEUR*Pane.width){
+		if(this.getPosition().getX()<0 ){
 			/* On stoppe le blob en X */
-			//super.setPositon(new PointSam(0, super.getPosition().getY()));
-			super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(), super.getVitesse().getY()));
-			//super.setAcceleration(new PointSam(0,super.getAcceleration().getY()));
+			super.setPositon(new PointSam(0, super.getPosition().getY()));
+			super.nouvelleVitesse(new PointSam(0.3, super.getVitesse().getY()));
+			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+		}
+		if(this.getPosition().getX()>(Pane.width/2)-Blob.BLOB_BODY_LARGEUR*Pane.width){
+			
 		}
 	}
 
