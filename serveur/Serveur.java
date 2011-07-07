@@ -94,7 +94,8 @@ public class Serveur implements Runnable {
 				Blob.instanceServeur.nextPosition(ordreLocal);
 			}
 		};
-		new Timer(IServeur.DELAY, lAction).start();
+		Timer time = new Timer(IServeur.DELAY, lAction);
+		time.start();
 		
 		try {
 			while (Main.jeuEnCours){
@@ -133,7 +134,7 @@ public class Serveur implements Runnable {
 					}
 				}
 			}
-
+			time.stop();
 			this.client.close();
 			this.server.close();
 		} catch (IOException e) {
