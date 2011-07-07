@@ -5,10 +5,13 @@ import interfaceCS.PointSam;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 public class Pane extends JPanel implements KeyListener {
@@ -30,6 +33,15 @@ public class Pane extends JPanel implements KeyListener {
 		super();
 		this.setSize(width, height);
 		this.ordre = IServeur.ORDRE_RESTE;
+		ActionListener al = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Blob.instanceServeur.nextPosition(ordre);
+				ordre = IServeur.ORDRE_RESTE;
+				repaint();
+			}
+		};
+		Timer time = new Timer(IServeur.DELAY, al);
+		time.start();
 	}
 	
 	
@@ -44,7 +56,7 @@ public class Pane extends JPanel implements KeyListener {
 		g.setColor(BACKGROUND_COLOR);
 		g.fillRect(0, 0, width, height);
 		
-		/* Création du filet */
+		/* Crï¿½ation du filet */
 		g.setColor(Color.black);
 		g.fillRect((int) (width/2 - width/100), 
 				(int)(height - height/8), 
@@ -69,8 +81,6 @@ public class Pane extends JPanel implements KeyListener {
 		case KeyEvent.VK_RIGHT : this.ordre = IServeur.ORDRE_DROITE;break;
 		case KeyEvent.VK_SPACE : this.ordre = IServeur.ORDRE_SAUT;break;
 		}
-		Blob.instanceServeur.nextPosition(ordre);
-		this.repaint();
 	}
 
 
