@@ -8,8 +8,6 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-import serveur.Serveur;
-
 import client.Main;
 
 
@@ -124,7 +122,8 @@ public class IServeur {
 	public PointSam[] envoyerDonnees(int ordre){
 		// Envoie des données concernant le déplacement local.
 		try {
-			this.oStream.write((((this.local)?"l:":"d:")+ordre).getBytes());
+			this.oStream.write((((this.local==SERVEUR_LOCAL)?"l:":"d:")+(""+ordre+"\n")).getBytes());
+			this.oStream.flush();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "La connexion au serveur n'est plus effective !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
@@ -134,9 +133,13 @@ public class IServeur {
 		try {
 			byte[] b = new byte[1000];
 			int bitsRecus = 0;
-			while((bitsRecus = this.iStream.read(b)) >= 0) {
+			System.out.println("avant read");
+			if((bitsRecus = this.iStream.read(b)) >= 0) {
+				System.out.println("dans read");
 				coord = new String(b, 0, bitsRecus);
+				System.out.println("coord : " + coord);
 			}
+			System.out.println("apres read");
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, "La connexion au serveur n'est plus effective !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
