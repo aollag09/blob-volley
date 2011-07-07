@@ -31,7 +31,7 @@ public class Blob extends Mobile {
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	/** bornes acc�l�ration */
-	public static double MAX_ACCELERATION = 4;
+	public static double MAX_ACCELERATION = 3;
 	
 	
 	/** Le double singleton */
@@ -89,14 +89,14 @@ public class Blob extends Mobile {
 		case IServeur.ORDRE_GAUCHE :
 			/* On augmente l'acc�lar�ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-0.5),
+					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-0.2),
 					this.getAcceleration().getY()));		
 			break;
 			
 		case IServeur.ORDRE_DROITE :
 			/* On augmente l'acc�lar�ation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.5),
+					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.2),
 					this.getAcceleration().getY()));		
 			break;
 			
@@ -108,8 +108,8 @@ public class Blob extends Mobile {
 		if(this.getPosition().getX()<0 || this.getPosition().getX()>(Pane.width/2)-Blob.BLOB_BODY_LARGEUR*Pane.width){
 			/* On stoppe le blob en X */
 			//super.setPositon(new PointSam(0, super.getPosition().getY()));
-			super.setVitesse(new PointSam(0, super.getVitesse().getY()));
-			super.setAcceleration(new PointSam(0,super.getAcceleration().getY()));
+			super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(), super.getVitesse().getY()));
+			//super.setAcceleration(new PointSam(0,super.getAcceleration().getY()));
 		}
 	}
 
