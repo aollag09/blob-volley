@@ -25,8 +25,8 @@ public class Blob extends Mobile {
 	public final static double BLOB_BODY_LARGEUR = 0.10;
 	public final static double BLOB_BODY_HAUTEUR = 0.09;
 	/** the eyes */
-	public final static double BLOB_EYES_LARGEUR = 0.02;
-	public final static double BLOB_EYES_HAUTEUR = 0.04;
+	public final static double BLOB_EYES_LARGEUR = 0.006;
+	public final static double BLOB_EYES_HAUTEUR = 0.011;
 	/** the link */
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
@@ -36,8 +36,8 @@ public class Blob extends Mobile {
 
 
 	/** Le double singleton */
-	public static Blob instanceServeur = new Blob(true);
-	public static Blob instanceClient = new Blob(false);
+	public static Blob instanceServeur = new Blob(true, new PointSam(0.0,1.0));
+	public static Blob instanceClient = new Blob(false, new PointSam(0.9,1.0));
 
 	/* Les variables d'instance */
 	/** Un boolean pour diffÃ©rencier le blob local du blob distant */
@@ -46,8 +46,8 @@ public class Blob extends Mobile {
 	private boolean isJumping;
 
 	/* Le constructeur */
-	private Blob(boolean isServeur){
-		super();
+	private Blob(boolean isServeur, PointSam p){
+		super(p);
 		this.setServeur(isServeur);
 		this.isJumping = false;
 	}
@@ -66,17 +66,21 @@ public class Blob extends Mobile {
 
 		g.drawImage (img.getImage(),
 				(int)(Pane.width*super.getPosition().getX()),
-				(int)(Pane.height - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height) ),
+				(int)(Pane.height*super.getPosition().getY() - (int)(Blob.BLOB_BODY_HAUTEUR*Pane.height)),
 				(int)(Blob.BLOB_BODY_LARGEUR*Pane.width), 
 				(int)(Blob.BLOB_BODY_HAUTEUR*Pane.height),null );
 
 		/* On trace ensuite les yeux */
 		g.setColor(Color.black);
-		int signe = 1;
-		if(!this.isServeur)
-			signe = -1;
-		int centre = 0;
-		//g.drawOval(x, y, 6, 6)
+		Point centre = new Point(
+				(int)(Pane.width*(super.getPosition().getX()+Blob.BLOB_BODY_LARGEUR*((this.isServeur)?(92-21):21)/92)),
+				(int)(Pane.height*(super.getPosition().getY() + (19-37)*Blob.BLOB_BODY_HAUTEUR/37))
+				);
+		g.fillOval((int)(centre.x-Blob.BLOB_EYES_LARGEUR*Pane.width/2),
+				(int)(centre.y-Blob.BLOB_EYES_HAUTEUR*Pane.height/2),
+				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width),
+				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height)
+				);
 
 
 	}
@@ -109,7 +113,7 @@ public class Blob extends Mobile {
 			break;
 
 		case IServeur.ORDRE_SAUT :
-			/* On augmente l'accélération vers le haut */
+			/* On augmente l'accï¿½lï¿½ration vers le haut */
 			if(!this.isJumping){
 				this.isJumping = true;
 				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), this.SAUT_ACCELERATION));
