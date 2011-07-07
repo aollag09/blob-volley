@@ -30,7 +30,7 @@ public class Mobile {
 	
 	public Mobile(PointSam p){
 		this.position = p;
-		this.vitesse = new PointSam(10,8);
+		this.vitesse = new PointSam();
 		this.acceleration = new PointSam();
 		/* On garde trois points pour calculer la vitesse et l'accélération */
 		this.historique = new LinkedList<PointSam>();
@@ -49,9 +49,6 @@ public class Mobile {
 		this.historique.addLast(p);
 		/* On redï¿½termine la vitesse actuelle */
 		double vitX = ( this.historique.get(2).getX()-this.historique.get(1).getX() ) / ((IServeur.DELAY+0.0)/1000);
-		System.out.println("LOOK UNDER");
-		System.out.println( ((IServeur.DELAY+0.0)/1000));
-		System.out.println(vitX);
 		double vitY = (this.historique.get(2).getY()-this.historique.get(1).getY())/((IServeur.DELAY+0.0)/1000);
 		this.vitesse = new PointSam(vitX,vitY);
 		

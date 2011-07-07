@@ -10,10 +10,11 @@ import client.Pane;
  * Principe :
  * >> On garde en mémoire la première position ou laposition d'un choc
  * >> En fonction des différentes forces appliquées à la balle en ce point de choc on détermine le point juste après 
- * >> On peut alors savoir nouvelle vitesse de la balle
+ * >> On peut alors savoir nouvelle vitesse initiale de la balle
  * >> On calcule tous les autres points en tenant compte simplement du poids et de cette vitesse initiale
  * >> On incrémente le compteur à chaque nouveau point "libre"
- * >> On recommence la boucle si la balle touche un autre obstacle, et on remet le compteur à zéro
+ * >> On recommence la boucle si la balle touche un autre obstacle, 
+ * >> on remet le compteur à zéro
  * 
  * @author Amaury
  *
@@ -21,7 +22,7 @@ import client.Pane;
 public class Balle extends Mobile{
 	
 	/* Le singleton */
-	public static Balle instance = new Balle(new PointSam(300,300));
+	public static Balle instance = new Balle(new PointSam(20,20));
 
 	/* Constantes */
 	public static final double TAILLE_BALLE = 0.10;
@@ -38,18 +39,21 @@ public class Balle extends Mobile{
 	private double compteur = 0;
 	
 	/** Le point initiale du choc */
-	private PointSam ref;
+	private PointSam positionInitiale;
+	/** La vitesse initiale du choc */
+	private PointSam vitesseInitiale;
 	
 	
 	/* Constructeur */
 	private Balle(){
 		super();
-		this.ref = new PointSam(20,20);
+		this.positionInitiale = new PointSam(20,20);
 	}
 	
 	private Balle(PointSam p){
 		super(p);
-		this.ref = new PointSam(20,20);
+		this.positionInitiale = new PointSam(20,20);
+		this.vitesseInitiale = new PointSam(10,-1);
 	}
 
 	/** Méthode appelé à chaque delay pour recalculer la position de la balle */
@@ -70,8 +74,9 @@ public class Balle extends Mobile{
 			else{
 				/* Aucun risque de toucher un blob */
 				/* On calcul ainsi les nouveaux coordonnées de la balle simplement en fonction du poids */
-				double posX = this.ref.getX() + super.getVitesse().getX()*compteur;
-				double posY = this.ref.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur;
+				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
+				double posY = this.positionInitiale.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
+							+ this.getVitesseInitiale().getY()*compteur;
 				newPosition = new PointSam(posX, posY);
 			}
 		}
@@ -94,14 +99,28 @@ public class Balle extends Mobile{
 	 * @return the ref
 	 */
 	public PointSam getRef() {
-		return ref;
+		return positionInitiale;
 	}
 
 	/**
 	 * @param ref the ref to set
 	 */
 	public void setRef(PointSam ref) {
-		this.ref = ref;
+		this.positionInitiale = ref;
+	}
+
+	/**
+	 * @return the vitesseInitiale
+	 */
+	public PointSam getVitesseInitiale() {
+		return vitesseInitiale;
+	}
+
+	/**
+	 * @param vitesseInitiale the vitesseInitiale to set
+	 */
+	public void setVitesseInitiale(PointSam vitesseInitiale) {
+		this.vitesseInitiale = vitesseInitiale;
 	}
 
 
