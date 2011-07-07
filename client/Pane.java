@@ -63,7 +63,6 @@ public class Pane extends JPanel implements KeyListener {
 				(int)(width/50),
 				(int) (height/8));
 		
-		
 		Blob.instanceServeur.paintBlob(g);
 		Blob.instanceClient.paintBlob(g);
 	
