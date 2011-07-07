@@ -36,7 +36,7 @@ public class Main {
 			System.out.println("Vitesse       ===> "+ Balle.instance.getVitesse());
 			System.out.println("Accélération  ===> "+ Balle.instance.getAcceleration());
 			System.out.println();
-			v.add(new Point(Balle.instance.getCompteur(),Balle.instance.getPosition().getY()));
+			v.add(new Point(Balle.instance.getCompteur(),-Balle.instance.getPosition().getY()));
 		}
 		Courbe c = new Courbe(v);
 		Graphique g =new Graphique("Test",900,500) ;
