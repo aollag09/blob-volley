@@ -5,16 +5,16 @@ import java.util.LinkedList;
 import client.Pane;
 
 /**
- * Classe qui va permettre de modéliser les différentes trajectoire de la balle
+ * Classe qui va permettre de modï¿½liser les diffï¿½rentes trajectoire de la balle
  * 
  * Principe :
- * >> On garde en mémoire la première position ou laposition d'un choc
- * >> En fonction des différentes forces appliquées à la balle en ce point de choc on détermine le point juste après 
+ * >> On garde en mï¿½moire la premiï¿½re position ou laposition d'un choc
+ * >> En fonction des diffï¿½rentes forces appliquï¿½es ï¿½ la balle en ce point de choc on dï¿½termine le point juste aprï¿½s 
  * >> On peut alors savoir nouvelle vitesse initiale de la balle
  * >> On calcule tous les autres points en tenant compte simplement du poids et de cette vitesse initiale
- * >> On incrémente le compteur à chaque nouveau point "libre"
+ * >> On incrï¿½mente le compteur ï¿½ chaque nouveau point "libre"
  * >> On recommence la boucle si la balle touche un autre obstacle, 
- * >> on remet le compteur à zéro
+ * >> on remet le compteur ï¿½ zï¿½ro
  * 
  * @author Amaury
  *
@@ -22,7 +22,7 @@ import client.Pane;
 public class Balle extends Mobile{
 	
 	/* Le singleton */
-	public static Balle instance = new Balle(new PointSam(20,20));
+	public static Balle instance = new Balle(new PointSam(0,0));
 
 	/* Constantes */
 	public static final double TAILLE_BALLE = 0.10;
@@ -30,9 +30,9 @@ public class Balle extends Mobile{
 	public static final double MASSE_BALLE = 0.05;
 
 	/* Un compteur */
-	/** Cet entier permet d'incrémenter le temps pour calculer les trajectoires de la balle uniquement dans le cas
+	/** Cet entier permet d'incrï¿½menter le temps pour calculer les trajectoires de la balle uniquement dans le cas
 	 * ou elle est "libre"
-	 * Il est remit à zéro en cas de choque pour recalculer sa trajectoire 
+	 * Il est remit ï¿½ zï¿½ro en cas de choque pour recalculer sa trajectoire 
 	 * 
 	 * Le temps dans le compteur est en !!!!!!!!!!!!! SECONDES !!!!!!!!!!!!!!!
 	 */
@@ -56,7 +56,7 @@ public class Balle extends Mobile{
 		this.vitesseInitiale = new PointSam(10,-1);
 	}
 
-	/** Méthode appelé à chaque delay pour recalculer la position de la balle */
+	/** Mï¿½thode appelï¿½ ï¿½ chaque delay pour recalculer la position de la balle */
 	public void nextPosition(){
 		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
 		PointSam newPosition = new PointSam();
@@ -73,7 +73,7 @@ public class Balle extends Mobile{
 			}
 			else{
 				/* Aucun risque de toucher un blob */
-				/* On calcul ainsi les nouveaux coordonnées de la balle simplement en fonction du poids */
+				/* On calcul ainsi les nouveaux coordonnï¿½es de la balle simplement en fonction du poids */
 				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
 				double posY = this.positionInitiale.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
 							+ this.getVitesseInitiale().getY()*compteur;

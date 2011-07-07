@@ -37,6 +37,8 @@ public class Pane extends JPanel implements KeyListener {
 			
 			public void actionPerformed(ActionEvent e) {
 				Blob.instanceServeur.nextPosition(ordre);
+				if (ordre == IServeur.ORDRE_SAUT)
+					ordre = IServeur.ORDRE_RESTE;
 				repaint();
 			}
 		};
