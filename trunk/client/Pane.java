@@ -26,7 +26,6 @@ public class Pane extends JPanel implements KeyListener {
 	public Pane(){
 		super();
 		this.setSize(width, height);
-		this.addKeyListener(this);
 	}
 	
 	
