@@ -35,7 +35,7 @@ public class IServeur {
 	/**
 	 * Constantes qui définissent les différents ordre des controles du joueur : gauche, immmobile, droite
 	 */
-	public static final int ORDRE_GAUCHE = -1, ORDRE_RESTE = 0, ORDRE_DROITE = 1; 
+	public static final int ORDRE_GAUCHE = -1, ORDRE_RESTE = 0, ORDRE_DROITE = 1, ORDRE_SAUT = 2; 
 	
 	
 	
