@@ -32,10 +32,10 @@ public class Main {
 //		ArrayList<Point> v = new ArrayList<Point>();
 //		for(int i=0; i<225; i++){
 //			Balle.instance.nextPosition();
-//			System.out.println("Tick n° "+i);
+//			System.out.println("Tick nï¿½ "+i);
 //			System.out.println("Position      ===> "+ Balle.instance.getPosition());
 //			System.out.println("Vitesse       ===> "+ Balle.instance.getVitesse());
-//			System.out.println("Accélération  ===> "+ Balle.instance.getAcceleration());
+//			System.out.println("Accï¿½lï¿½ration  ===> "+ Balle.instance.getAcceleration());
 //			System.out.println();
 //			v.add(new Point(Balle.instance.getPosition().getX(),- Balle.instance.getPosition().getY()));
 //		}

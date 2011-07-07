@@ -20,7 +20,7 @@ public class IServeur {
 	/**
 	 * Delai de connexion définissant le temps entre chaque requête
 	 */
-	public static int DELAY = 20;
+	public static int DELAY = 50;
 	
 	/**
 	 * Constantes qui définissent le type du serveur.
