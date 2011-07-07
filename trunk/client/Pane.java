@@ -26,6 +26,7 @@ public class Pane extends JPanel implements KeyListener {
 	public Pane(){
 		super();
 		this.setSize(width, height);
+		this.addKeyListener(this);
 	}
 	
 	
@@ -58,8 +59,12 @@ public class Pane extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		int key = arg0.getKeyCode();
+		switch(key){
+		case KeyEvent.VK_LEFT : System.out.println("left");break;
+		case KeyEvent.VK_RIGHT : System.out.println("right");break;
+		case KeyEvent.VK_SPACE : System.out.println("space");break;
+		}
 	}
 
 
