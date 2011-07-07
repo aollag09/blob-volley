@@ -30,7 +30,7 @@ public class Mobile {
 	
 	public Mobile(PointSam p){
 		this.position = p;
-		this.vitesse = new PointSam(1,2);
+		this.vitesse = new PointSam(10,8);
 		this.acceleration = new PointSam();
 		/* On garde trois points pour calculer la vitesse et l'accélération */
 		this.historique = new LinkedList<PointSam>();
@@ -48,19 +48,22 @@ public class Mobile {
 		this.historique.pop();
 		this.historique.addLast(p);
 		/* On redï¿½termine la vitesse actuelle */
-		double vitX = (this.historique.get(2).getX()-this.historique.get(1).getX())/IServeur.DELAY;
-		double vitY = (this.historique.get(2).getY()-this.historique.get(1).getY())/IServeur.DELAY;
+		double vitX = ( this.historique.get(2).getX()-this.historique.get(1).getX() ) / ((IServeur.DELAY+0.0)/1000);
+		System.out.println("LOOK UNDER");
+		System.out.println( ((IServeur.DELAY+0.0)/1000));
+		System.out.println(vitX);
+		double vitY = (this.historique.get(2).getY()-this.historique.get(1).getY())/((IServeur.DELAY+0.0)/1000);
 		this.vitesse = new PointSam(vitX,vitY);
 		
 		/* L'ancienneVitesse */
 		PointSam aVitesse;
-		double avitX = (this.historique.get(1).getX()-this.historique.get(0).getX())/IServeur.DELAY;
-		double avitY = (this.historique.get(1).getY()-this.historique.get(0).getY())/IServeur.DELAY;
+		double avitX = (this.historique.get(1).getX()-this.historique.get(0).getX())/((IServeur.DELAY+0.0)/1000);
+		double avitY = (this.historique.get(1).getY()-this.historique.get(0).getY())/((IServeur.DELAY+0.0)/1000);
 		aVitesse = new PointSam(avitX,avitY);
 		
 		/* La nouvelle accï¿½lï¿½ration */
-		double accX = (this.vitesse.getX()-aVitesse.getX())/IServeur.DELAY;
-		double accY = (this.vitesse.getY()-aVitesse.getY())/IServeur.DELAY;
+		double accX = (this.vitesse.getX()-aVitesse.getX())/((IServeur.DELAY+0.0)/1000);
+		double accY = (this.vitesse.getY()-aVitesse.getY())/((IServeur.DELAY+0.0)/1000);
 		this.acceleration = new PointSam(accX,accY);
 	}
 
