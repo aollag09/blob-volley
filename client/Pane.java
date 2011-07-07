@@ -34,6 +34,7 @@ public class Pane extends JPanel implements KeyListener {
 		this.setSize(width, height);
 		this.ordre = IServeur.ORDRE_RESTE;
 		ActionListener al = new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				Blob.instanceServeur.nextPosition(ordre);
 				repaint();
