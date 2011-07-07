@@ -90,16 +90,17 @@ public class Blob extends Mobile {
 		case IServeur.ORDRE_GAUCHE :
 			/* On augmente l'accélaréation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-0.5 ),
+					Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-1),
 					this.getAcceleration().getY()));		
 			break;
 			
 		case IServeur.ORDRE_DROITE :
 			/* On augmente l'accélaréation vers la gauche */
 			super.nouvelleAcceleration(new PointSam(
-					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.5 ),
+					Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+1),
 					this.getAcceleration().getY()));		
 			break;
+
 		}
 		
 	}
