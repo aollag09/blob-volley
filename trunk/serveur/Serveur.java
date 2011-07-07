@@ -5,12 +5,15 @@ import interfaceCS.Blob;
 import interfaceCS.IServeur;
 import interfaceCS.PointSam;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import client.Main;
 
@@ -84,7 +87,15 @@ public class Serveur implements Runnable {
 	 * Thread runnable pour mettre le serveur en multithreading.
 	 */
 	public void run() {
-		//TODO: TOUS LES IServeur.TIMER, faire une fonction qui redéfinit toutes les infos!!
+		ActionListener lAction = new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				Balle.instance.nextPosition();
+				Blob.instanceClient.nextPosition(ordreDistant);
+				Blob.instanceServeur.nextPosition(ordreLocal);
+			}
+		};
+		new Timer(IServeur.DELAY, lAction).start();
+		
 		try {
 			while (Main.jeuEnCours){
 
