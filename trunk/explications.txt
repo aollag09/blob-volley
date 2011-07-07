@@ -1,0 +1,54 @@
+LEGENDE !!
+
+double lignes = => thread différent || simple ligne - => connexion
+
+
+
+
+SERVEUR ET CLIENT LOCAUX !!
+
+
+
+
+
+					        		                     Client (affichage, listener, récupère info du serveur) (classe Pane)
+								                       //													\
+ INTERFACE (menu, lancement, options) (classe Main+Pane)													 \
+ 								                   	   \\               							  Attente de connexion eterieure (soit de localhost, soit du réseau) (*)
+ 									                    \\							                //
+ 									                     \\					                       //
+ 										                   Serveur (boucle infinie) (classe Serveur)
+ 															                                        \\
+ 															   	                                     \\
+ 															   	                                       Timer avec recalcul tous les certain temps
+ 															   	                                       
+ 															   	                                       
+(*) La boucle attend un message extérieur (peut importe que ce soit du client local ou du client réseau) et lui envoie directement les infos de coordonnées et traite les données reçues
+
+
+
+
+
+
+CLIENT RESEAU !!
+
+
+
+
+
+
+					        		                     Client (affichage, listener, récupère info du serveur) (classe Pane)
+								                       //													\
+ INTERFACE (menu, lancement, options) (classe Main+Pane)													 \
+ 								                   	   												(serveur dans l'autre pc du réseau : même partie "Attente de connexionx eterieure")
+ 			
+
+
+
+MESSAGES ENVOYES !!
+
+du client au serveur : [l,d]:[ordre] ex : l:0, d:-1, etc.  avec l => LOCAL, d => DISTANT, -1, 0, 1 constantes d'ordre (commande joueur)
+
+du serveur au client : [xballe],[yballe];[xjoueurserveur],[yjoueurserveur];[xjoueurclient],[yjoueurserveur] ex : 0.1,0.4;0,0;0.8,0
+
+
