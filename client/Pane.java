@@ -1,4 +1,5 @@
 package client;
+import interfaceCS.Balle;
 import interfaceCS.Blob;
 import interfaceCS.IServeur;
 import interfaceCS.PointSam;
@@ -37,6 +38,7 @@ public class Pane extends JPanel implements KeyListener {
 			
 			public void actionPerformed(ActionEvent e) {
 				Blob.instanceServeur.nextPosition(ordre);
+				Balle.instance.nextPosition();
 				if (ordre == IServeur.ORDRE_SAUT)
 					ordre = IServeur.ORDRE_RESTE;
 				repaint();
@@ -65,8 +67,12 @@ public class Pane extends JPanel implements KeyListener {
 				(int)(width/50),
 				(int) (height/8));
 		
+		/* On déssine les Blob */
 		Blob.instanceServeur.paintBlob(g);
 		Blob.instanceClient.paintBlob(g);
+		
+		/* On déssine la balle */
+		Balle.instance.paintBalle(g);
 	
 		
 	}
