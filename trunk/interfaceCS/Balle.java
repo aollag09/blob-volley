@@ -1,5 +1,10 @@
 package interfaceCS;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import client.Pane;
+
 /**
  * Classe qui va permettre de mod�liser les diff�rentes trajectoire de la balle
  * 
@@ -21,9 +26,12 @@ public class Balle extends Mobile{
 	public static Balle instance = new Balle(new PointSam(0,0));
 
 	/* Constantes */
-	public static final double TAILLE_BALLE = 0.10;
+	public final static double BALLE_LARGEUR = 4*0.006;
+	public final static double BALLE_HAUTEUR = 4*0.011;
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
-	public static final double MASSE_BALLE = 0.05;
+	public static final double MASSE_BALLE = 0.5;
+	public static final Color COULEUR_BALLE = Color.yellow;
+	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 
 	/* Un compteur */
 	/** Cet entier permet d'incr�menter le temps pour calculer les trajectoires de la balle uniquement dans le cas
@@ -43,13 +51,27 @@ public class Balle extends Mobile{
 	/* Constructeur */
 	private Balle(){
 		super();
-		this.positionInitiale = new PointSam(20,20);
+		this.positionInitiale = new PointSam(0,0);
 	}
 
 	private Balle(PointSam p){
 		super(p);
-		this.positionInitiale = new PointSam(20,20);
-		this.vitesseInitiale = new PointSam(10,-1);
+		this.positionInitiale = new PointSam(0,0);
+		this.vitesseInitiale = new PointSam(0.1,0);
+	}
+	
+	public void paintBalle(Graphics g){
+		g.setColor(COULEUR_BALLE);
+		g.fillOval( (int) (Pane.width*this.getPosition().getX()), 
+				(int) (Pane.height*this.getPosition().getY()),
+				(int) (BALLE_LARGEUR*Pane.width),
+				(int) (BALLE_HAUTEUR*Pane.height));
+		g.setColor(COULEUR_CONTOUR_BALLE);
+		g.drawOval( (int) (Pane.width*this.getPosition().getX()), 
+				(int) (Pane.height*this.getPosition().getY()),
+				(int) (BALLE_LARGEUR*Pane.width),
+				(int) (BALLE_HAUTEUR*Pane.height));
+		
 	}
 
 	/** M�thode appel� � chaque delay pour recalculer la position de la balle */
@@ -58,14 +80,20 @@ public class Balle extends Mobile{
 		PointSam newPosition = new PointSam();
 
 		/* On test dans un premier temps si la balle risque de toucher un blob */
-		if(super.getPosition().getY()<Blob.instanceServeur.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
+		if(super.getPosition().getY()>Blob.instanceServeur.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
 			/* Risque de toucher le blob serveur */
-
+			double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
+			double posY = this.positionInitiale.getY() - 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
+					+ this.getVitesseInitiale().getY()*compteur;
+			newPosition = new PointSam(posX, posY);
 		}
 		else{
-			if(super.getPosition().getY()<Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
+			if(super.getPosition().getY()>Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
 				/* Risque de toucher le blob client */
-
+				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
+				double posY = this.positionInitiale.getY() - 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
+						+ this.getVitesseInitiale().getY()*compteur;
+				newPosition = new PointSam(posX, posY);
 			}
 			else{
 				/* Aucun risque de toucher un blob */

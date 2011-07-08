@@ -151,7 +151,6 @@ public class Blob extends Mobile {
 			}
 		}
 		if((this.getPosition().getY()>1)){
-			System.out.println("Ok");
 			this.setPosition(new PointSam(this.getPosition().getX(), 1));
 			this.setVitesse(new PointSam(this.getVitesse().getX(), 0));
 			this.setAcceleration(new PointSam(this.getAcceleration().getX(), 0));
