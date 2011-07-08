@@ -2,10 +2,7 @@ package interfaceCS;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
-import java.util.LinkedList;
-
 import javax.swing.ImageIcon;
 
 import client.Pane;
@@ -27,14 +24,15 @@ public class Blob extends Mobile {
 	/** the eyes */
 	public final static double BLOB_EYES_LARGEUR = 0.006;
 	public final static double BLOB_EYES_HAUTEUR = 0.011;
-	public static final double RAYON_OEIL_LARGEUR = 0.004;
-	public static final double RAYON_OEIL_HAUTEUR = 0.008;
 	/** the link */
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	/** bornes accï¿½lï¿½ration */
 	public static double MAX_ACCELERATION = 1;
-	public static double SAUT_ACCELERATION = -4;
+	public static double SAUT_ACCELERATION = -7;
+	/** Constantes physiques */
+	public static final double CONSTANTE_DE_GRAVITATION = 9;
+	public static final double MASSE_BALLE = 0.05;
 
 
 	/** Le double singleton */
@@ -74,15 +72,12 @@ public class Blob extends Mobile {
 
 		/* On trace ensuite les yeux */
 		g.setColor(Color.black);
-		PointSam centreOeil = new PointSam(
-				super.getPosition().getX()+Blob.BLOB_BODY_LARGEUR*((this.isServeur)?(92-21):21)/92,
-				super.getPosition().getY() + (19-37)*Blob.BLOB_BODY_HAUTEUR/37
+		Point centre = new Point(
+				(int)(Pane.width*(super.getPosition().getX()+Blob.BLOB_BODY_LARGEUR*((this.isServeur)?(92-21):21)/92)),
+				(int)(Pane.height*(super.getPosition().getY() + (19-37)*Blob.BLOB_BODY_HAUTEUR/37))
 				);
-		double angleAvecBalle = Math.atan(-Pane.height*(Balle.instance.getPosition().getY()-centreOeil.getY())/(Pane.width*(Balle.instance.getPosition().getX()-centreOeil.getX())));
-		int signeH = (Balle.instance.getPosition().getX()>centreOeil.getX())?1:-1;
-		int signeV = (Balle.instance.getPosition().getY()>centreOeil.getY())?1:-1;
-		g.fillOval((int)(Pane.width*(centreOeil.getX()+signeH*Math.abs(Math.cos(angleAvecBalle)*Blob.RAYON_OEIL_LARGEUR)-Blob.BLOB_EYES_LARGEUR/2)),
-				(int)(Pane.height*(centreOeil.getY()+signeV*Math.abs(Math.sin(angleAvecBalle)*Blob.RAYON_OEIL_HAUTEUR)-Blob.BLOB_EYES_HAUTEUR/2)),
+		g.fillOval((int)(centre.x-Blob.BLOB_EYES_LARGEUR*Pane.width/2),
+				(int)(centre.y-Blob.BLOB_EYES_HAUTEUR*Pane.height/2),
 				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width),
 				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height)
 				);
@@ -124,29 +119,44 @@ public class Blob extends Mobile {
 				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), this.SAUT_ACCELERATION));
 			}
 		}
-
-		if(this.getPosition().getX()*Pane.width<0 ){
-			/* On stoppe le blob en X */
-			this.setPosition(new PointSam(0, this.getPosition().getY()));
-			super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
-			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+		
+		/* Cas généraux quelque soit la touche touchée appuyée lors du timer */
+		if(isJumping){
+			/* On diminue la vitesse de montée pour faire redescendre le Blob */
+			//super.nouvelleVitesse(new PointSam(this.getVitesse().getX(), -this.getVitesse().getY()/100));
+			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-this.SAUT_ACCELERATION/3));
+			//System.out.println("Accélération ===> "+this.getAcceleration().getY());
 		}
-		if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width>(int) (Pane.width/2 - Pane.width/100)){
-			this.setPosition(new PointSam( ((Pane.width/2 - Pane.width/100)) /  Pane.width
-					, this.getPosition().getY()));
-			super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
-			super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+		if(this.getPosition().getX()*Pane.width<=0 ){
+			if(this.getPosition().getX()== 0){
+				/* On fait le rebond */
+				super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
+				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+			}
+			else{
+				/* On remet à la position la plus à gauche */
+				super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/2, super.getVitesse().getY()));
+				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+			}
+			
+		}
+		if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width >= (int) (Pane.width/2 - Pane.width/100)){
+			if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width == (int) (Pane.width/2 - Pane.width/100)){
+				super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
+				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+			}
+			else{
+				super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/2, super.getVitesse().getY()));
+				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+			}
 		}
 		if((this.getPosition().getY()>1)){
-			this.setPosition(new PointSam(this.getPosition().getX(),1));
-			this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),0));
-			this.setAcceleration(new PointSam(super.getAcceleration().getX(),0));
-			this.setJumping(false);
-		}
-		if((this.getPosition().getY()<Blob.BLOB_BODY_HAUTEUR)){
-			this.setPosition(new PointSam(this.getPosition().getX(),0));
-			this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),0));
-			this.setAcceleration(new PointSam(super.getAcceleration().getX(),0));
+			System.out.println("Ok");
+			this.setPosition(new PointSam(this.getPosition().getX(), 1));
+			this.setVitesse(new PointSam(this.getVitesse().getX(), 0));
+			this.setAcceleration(new PointSam(this.getAcceleration().getX(), 0));
+			if(isJumping)
+				this.isJumping = false;
 		}
 	}
 

@@ -1,9 +1,5 @@
 package interfaceCS;
 
-import java.util.LinkedList;
-
-import client.Pane;
-
 /**
  * Classe qui va permettre de mod�liser les diff�rentes trajectoire de la balle
  * 
@@ -20,7 +16,7 @@ import client.Pane;
  *
  */
 public class Balle extends Mobile{
-	
+
 	/* Le singleton */
 	public static Balle instance = new Balle(new PointSam(0,0));
 
@@ -37,19 +33,19 @@ public class Balle extends Mobile{
 	 * Le temps dans le compteur est en !!!!!!!!!!!!! SECONDES !!!!!!!!!!!!!!!
 	 */
 	private double compteur = 0;
-	
+
 	/** Le point initiale du choc */
 	private PointSam positionInitiale;
 	/** La vitesse initiale du choc */
 	private PointSam vitesseInitiale;
-	
-	
+
+
 	/* Constructeur */
 	private Balle(){
 		super();
 		this.positionInitiale = new PointSam(20,20);
 	}
-	
+
 	private Balle(PointSam p){
 		super(p);
 		this.positionInitiale = new PointSam(20,20);
@@ -69,19 +65,19 @@ public class Balle extends Mobile{
 		else{
 			if(super.getPosition().getY()<Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
 				/* Risque de toucher le blob client */
-				
+
 			}
 			else{
 				/* Aucun risque de toucher un blob */
 				/* On calcul ainsi les nouveaux coordonn�es de la balle simplement en fonction du poids */
 				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
 				double posY = this.positionInitiale.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
-							+ this.getVitesseInitiale().getY()*compteur;
+						+ this.getVitesseInitiale().getY()*compteur;
 				newPosition = new PointSam(posX, posY);
 			}
 		}
-		
-		
+
+
 		/* On modifie la positon de la balle avec sa nouvelle position */
 		super.nouvellePosition(newPosition);
 
