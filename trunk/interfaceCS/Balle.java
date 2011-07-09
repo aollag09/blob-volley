@@ -3,6 +3,8 @@ package interfaceCS;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.text.Position;
+
 import client.Pane;
 
 /**
@@ -29,8 +31,8 @@ public class Balle extends Mobile{
 	public final static double BALLE_LARGEUR = 4*0.006;
 	public final static double BALLE_HAUTEUR = 4*0.011;
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
-	public static final double MASSE_BALLE = 0.2;
-	public static final Color COULEUR_BALLE = Color.yellow;
+	public static final double MASSE_BALLE = 0.5;
+	public static final Color COULEUR_BALLE = Color.gray;
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 
 	/* Un compteur */
@@ -59,7 +61,7 @@ public class Balle extends Mobile{
 		this.positionInitiale = new PointSam(0,0);
 		this.vitesseInitiale = new PointSam(0.1,0);
 	}
-	
+
 	public void paintBalle(Graphics g){
 		g.setColor(COULEUR_BALLE);
 		g.fillOval( (int) (Pane.width*this.getPosition().getX()), 
@@ -71,46 +73,71 @@ public class Balle extends Mobile{
 				(int) (Pane.height*this.getPosition().getY()),
 				(int) (BALLE_LARGEUR*Pane.width),
 				(int) (BALLE_HAUTEUR*Pane.height));
-		
+
 	}
 
 	/** Mï¿½thode appelï¿½ ï¿½ chaque delay pour recalculer la position de la balle */
 	public void nextPosition(){
 		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
-		
-		/* Par défault la balle tombe suivant donc uniquement les lois de la gravité */
-		PointSam newPosition = this.tomber();
-		
-		
+
+
+
+		boolean hasTouched = false;
+
 		/* On test ensuite si la balle risque de toucher un blob */
 		if(super.getPosition().getY()>Blob.instanceServeur.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
 			/* Risque de toucher le blob serveur */
-			
+			if(Math.abs(super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()) < Blob.BLOB_BODY_LARGEUR){
+				/* La balle est juste au dessus de Blob */
+				System.out.println("TEST");
+				System.out.println(this.getVitesse());
+				this.setAcceleration(new PointSam(0, 0));
+				/* Mais le blob étant arrondi il n'est pas encore sur que la balle le touche */
+				double vitX = this.getVitesseInitiale().getX();
+				double vitY = -2.5;
+				this.nouvelleVitesse(new PointSam(vitX, vitY));
+				hasTouched = true;
+			}
+
+
+
+
 			/* Si elle ne touche finalement pas le Blob */
-			double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
-			double posY = this.positionInitiale.getY() - 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
-					+ this.getVitesseInitiale().getY()*compteur;
-			newPosition = new PointSam(posX, posY);
+		}
+
+		if(super.getPosition().getY()>Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
+			/* Risque de toucher le blob client */
 		}
 		else{
-			if(super.getPosition().getY()>Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
-				/* Risque de toucher le blob client */
-				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
-				double posY = this.positionInitiale.getY() - 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
-						+ this.getVitesseInitiale().getY()*compteur;
-				newPosition = new PointSam(posX, posY);
-			}
-			else{
-				/* Aucun risque de toucher un blob */
-			}
+			/* Aucun risque de toucher un blob */
 		}
 
 
-		/* On modifie la positon de la balle avec sa nouvelle position */
-		super.nouvellePosition(newPosition);
+		/* Si la balle ne touche certes rien mais tombe en dessous de zero en Y: */
+		if(! hasTouched){
+			if((super.getPosition().getY()+this.BALLE_HAUTEUR) >= 1 ){
+				super.setPosition(new PointSam(super.getPosition().getX(), 1-this.BALLE_HAUTEUR));
+				super.setVitesse(new PointSam(0,0));
+				super.setAcceleration(new PointSam(0,0));
+			}else{
+
+				/* On modifie la positon de la balle avec sa nouvelle position */
+				super.nouvellePosition(this.tomber());
+
+			}
+		}else{
+			/* On reinitialise les paramètres du choque */
+			this.positionInitiale = super.getPosition();
+			this.vitesseInitiale = super.getVitesse();
+			this.compteur = 0;
+		}
+
+
+
+
 
 	}
-	
+
 	private PointSam  tomber(){
 		/* On calcul ainsi les nouveaux coordonnï¿½es de la balle simplement en fonction du poids */
 		double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
