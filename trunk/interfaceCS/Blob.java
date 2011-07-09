@@ -29,7 +29,7 @@ public class Blob extends Mobile {
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
 	/** bornes accï¿½lï¿½ration */
 	public static double MAX_ACCELERATION = 1;
-	public static double SAUT_ACCELERATION = -7;
+	public static double SAUT_ACCELERATION = -20;
 	/** Constantes physiques */
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
 	public static final double MASSE_BALLE = 0.05;
@@ -91,7 +91,7 @@ public class Blob extends Mobile {
 
 		case IServeur.ORDRE_RESTE : 
 			/* On diminue par 2 la vitesse suivant l'axe des X */
-			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/1.1, this.getVitesse().getY()));
+			super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/(1.04), this.getVitesse().getY()));
 			break;
 
 		case IServeur.ORDRE_GAUCHE :
@@ -124,7 +124,7 @@ public class Blob extends Mobile {
 		if(isJumping){
 			/* On diminue la vitesse de montée pour faire redescendre le Blob */
 			//super.nouvelleVitesse(new PointSam(this.getVitesse().getX(), -this.getVitesse().getY()/100));
-			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-this.SAUT_ACCELERATION/3));
+			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-this.SAUT_ACCELERATION/6));
 			//System.out.println("Accélération ===> "+this.getAcceleration().getY());
 		}
 		if(this.getPosition().getX()*Pane.width<=0 ){
