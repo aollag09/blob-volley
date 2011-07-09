@@ -29,7 +29,7 @@ public class Balle extends Mobile{
 	public final static double BALLE_LARGEUR = 4*0.006;
 	public final static double BALLE_HAUTEUR = 4*0.011;
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
-	public static final double MASSE_BALLE = 0.5;
+	public static final double MASSE_BALLE = 0.2;
 	public static final Color COULEUR_BALLE = Color.yellow;
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 
@@ -77,11 +77,16 @@ public class Balle extends Mobile{
 	/** Mï¿½thode appelï¿½ ï¿½ chaque delay pour recalculer la position de la balle */
 	public void nextPosition(){
 		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
-		PointSam newPosition = new PointSam();
-
-		/* On test dans un premier temps si la balle risque de toucher un blob */
+		
+		/* Par défault la balle tombe suivant donc uniquement les lois de la gravité */
+		PointSam newPosition = this.tomber();
+		
+		
+		/* On test ensuite si la balle risque de toucher un blob */
 		if(super.getPosition().getY()>Blob.instanceServeur.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
 			/* Risque de toucher le blob serveur */
+			
+			/* Si elle ne touche finalement pas le Blob */
 			double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
 			double posY = this.positionInitiale.getY() - 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
 					+ this.getVitesseInitiale().getY()*compteur;
@@ -97,11 +102,6 @@ public class Balle extends Mobile{
 			}
 			else{
 				/* Aucun risque de toucher un blob */
-				/* On calcul ainsi les nouveaux coordonnï¿½es de la balle simplement en fonction du poids */
-				double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
-				double posY = this.positionInitiale.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
-						+ this.getVitesseInitiale().getY()*compteur;
-				newPosition = new PointSam(posX, posY);
 			}
 		}
 
@@ -109,6 +109,14 @@ public class Balle extends Mobile{
 		/* On modifie la positon de la balle avec sa nouvelle position */
 		super.nouvellePosition(newPosition);
 
+	}
+	
+	private PointSam  tomber(){
+		/* On calcul ainsi les nouveaux coordonnï¿½es de la balle simplement en fonction du poids */
+		double posX = this.positionInitiale.getX() + this.getVitesseInitiale().getX()*compteur;
+		double posY = this.positionInitiale.getY() + 0.5*MASSE_BALLE*CONSTANTE_DE_GRAVITATION*compteur*compteur
+				+ this.getVitesseInitiale().getY()*compteur;
+		return new PointSam(posX, posY);
 	}
 
 	public double getCompteur() {
