@@ -114,6 +114,7 @@ public class Serveur implements Runnable {
 					for (int i=0;i<3;i++){
 						aEnvoyer+=coordonnees[i]+";";
 					}
+					aEnvoyer+=Main.partieEnCours.getScoreServeur()+","+Main.partieEnCours.getScoreClient();
 					this.client.getOutputStream().write(aEnvoyer.getBytes());
 
 					/* On récupère les ordres suivants */

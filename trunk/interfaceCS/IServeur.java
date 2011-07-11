@@ -30,7 +30,7 @@ public class IServeur {
 	/**
 	 * Constantes qui définissent la positions des différentes données dans les tableaux échangés.
 	 */
-	public static final int BALLE = 0, JOUEUR_LOCAL = 1, JOUEUR_DISTANT = 2; 
+	public static final int BALLE = 0, JOUEUR_LOCAL = 1, JOUEUR_DISTANT = 2, SCORE = 3;
 
 	/**
 	 * Constantes qui définissent les différents ordre des controles du joueur : gauche, immmobile, droite
@@ -115,11 +115,11 @@ public class IServeur {
 	}
 	
 	/**
-	 * Envoie l'ordre que fait l'utilisateur et retourne les différentes coordonnées.
+	 * Envoie l'ordre que fait l'utilisateur et retourne les différentes coordonnées et le score.
 	 * @param ordre
-	 * @return retourne les coordonnées des différents objets
+	 * @return retourne les coordonnées des différents objets et le score
 	 */
-	public PointSam[] envoyerDonnees(int ordre){
+	public Object[] envoyerDonnees(int ordre){
 		// Envoie des données concernant le déplacement local.
 		try {
 			this.oStream.write((((this.local==SERVEUR_LOCAL)?"l:":"d:")+(""+ordre+"\n")).getBytes());
@@ -178,11 +178,27 @@ public class IServeur {
 				joueurDistant = new PointSam();
 			}
 			
+			int scoreServeur, scoreClient;
+			try {
+				String[] temp = lesTrois[IServeur.SCORE].split(",");
+				scoreServeur = Integer.parseInt(temp[0]);
+				scoreClient = Integer.parseInt(temp[1]);
+			} catch (Exception e){
+				scoreServeur = 0;
+				scoreClient = 0;
+			}
+			
 			PointSam[] coordour = new PointSam[3];
 			coordour[IServeur.BALLE] = balle;
 			coordour[IServeur.JOUEUR_DISTANT] = joueurDistant;
 			coordour[IServeur.JOUEUR_LOCAL] = joueurLocal;
-			return coordour; 
+			Object[] retour = new Object[2];
+			retour[0] = coordour;
+			int[] scores = new int[2];
+			scores[0] = scoreServeur;
+			scores[1] = scoreClient;
+			retour[1] = scores;
+			return retour; 
 		}
 		else {
 			return null;
