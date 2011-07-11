@@ -2,6 +2,7 @@ package client;
 
 import interfaceCS.Balle;
 import interfaceCS.Blob;
+import interfaceCS.Partie;
 import interfaceCS.PointSam;
 
 import java.awt.event.MouseEvent;
@@ -17,10 +18,15 @@ public class Main {
 
 	public static int port = 0;
 
-	public static boolean jeuEnCours = true;
+	public static boolean jeuEnCours = false;
+	
+	public static Partie partieEnCours = null;
 
 	public static void main(String[] args){
 
+		Main.partieEnCours = new Partie();
+		Main.jeuEnCours = true;
+		
 		JFrame f = new JFrame();
 		f.add(Pane.instance);
 		f.setTitle("Blob Volley");
