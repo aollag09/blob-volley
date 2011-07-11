@@ -32,6 +32,7 @@ public class Balle extends Mobile{
 	public final static double BALLE_HAUTEUR = 4*0.011;
 	public static final double CONSTANTE_DE_GRAVITATION = 9;
 	public static final double MASSE_BALLE = 0.5;
+	public static final double VITESSE_REBOND = -2.5;
 	public static final Color COULEUR_BALLE = Color.gray;
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 
@@ -80,50 +81,82 @@ public class Balle extends Mobile{
 	public void nextPosition(){
 		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
 
-
-
+		/* Un boolean pour savoir si la balle a touche quelque chose lors de son trajet */
 		boolean hasTouched = false;
 
 		/* On test ensuite si la balle risque de toucher un blob */
+		
+		/* Risque de toucher le blob serveur */
 		if(super.getPosition().getY()>Blob.instanceServeur.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
-			/* Risque de toucher le blob serveur */
-			if(Math.abs(super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()) < Blob.BLOB_BODY_LARGEUR){
-				/* La balle est juste au dessus de Blob */
-				System.out.println("TEST");
-				System.out.println(this.getVitesse());
-				this.setAcceleration(new PointSam(0, 0));
-				/* Mais le blob étant arrondi il n'est pas encore sur que la balle le touche */
-				double vitX = this.getVitesseInitiale().getX();
-				double vitY = -2.5;
-				this.nouvelleVitesse(new PointSam(vitX, vitY));
-				hasTouched = true;
+			if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceServeur.getPosition().getX()>0
+					&& super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
+				/* Le blod est en forme de demi cercle, on regarde donc si la balle et en dessous 
+				 Le centre le la balle peut circuler sur le cercle de centre : le centre de blob
+				 et de rayon rayon du blob + rayon de la balle */
+				double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()-(Blob.instanceServeur.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)));///Blob.BLOB_BODY_LARGEUR/2;
+				/* Calculons le point appartenant au cercle surface ayant cette position en X */
+				//System.out.print("COSINUS :"+cos);
+				double angle = Math.acos(cos);
+				//System.out.println("ANGLE :"+angle);
+				
+				
+				
+				//DU TEST
+				if(super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()< Blob.BLOB_BODY_LARGEUR/2){
+					/* La balle est juste au dessus de Blob */
+					this.setAcceleration(new PointSam(0, 0));
+					/* Mais le blob étant arrondi il n'est pas encore sur que la balle le touche */
+					double vitX = this.getVitesseInitiale().getX();
+					double vitY = VITESSE_REBOND;
+					this.nouvelleVitesse(new PointSam(-vitX, vitY));
+					hasTouched = true;
+				}else{
+					/* La balle est juste au dessus de Blob */
+					this.setAcceleration(new PointSam(0, 0));
+					/* Mais le blob étant arrondi il n'est pas encore sur que la balle le touche */
+					double vitX = this.getVitesseInitiale().getX();
+					double vitY = VITESSE_REBOND;
+					this.nouvelleVitesse(new PointSam(-vitX, vitY));
+					hasTouched = true;
+				}
 			}
 
-
-
-
-			/* Si elle ne touche finalement pas le Blob */
 		}
 
+		/* Risque de toucher le blob client */
+		
 		if(super.getPosition().getY()>Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
-			/* Risque de toucher le blob client */
+			
 		}
-		else{
-			/* Aucun risque de toucher un blob */
+		
+		
+		/* Risque de touche le filet */
+		
+		
+		/* Risque de toucher les murs */
+		if(super.getPosition().getX()<0){
+			//System.out.println("DERRIERE MUR GAUCHE");
+			super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+			hasTouched = true;
 		}
 
-
+		
+		////////////////////////////////////
+		///// La balle na rien touché //////
+		////////////////////////////////////
+		
 		/* Si la balle ne touche certes rien mais tombe en dessous de zero en Y: */
 		if(! hasTouched){
-			if((super.getPosition().getY()+this.BALLE_HAUTEUR) >= 1 ){
-				super.setPosition(new PointSam(super.getPosition().getX(), 1-this.BALLE_HAUTEUR));
+			if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) >= 1 ){
+				super.setPosition(new PointSam(super.getPosition().getX(), 1-Balle.BALLE_HAUTEUR));
 				super.setVitesse(new PointSam(0,0));
 				super.setAcceleration(new PointSam(0,0));
 			}else{
-
 				/* On modifie la positon de la balle avec sa nouvelle position */
 				super.nouvellePosition(this.tomber());
-
+				/* On regarde si la balle ne va pas traverser un mur ... */
+			
+				
 			}
 		}else{
 			/* On reinitialise les paramètres du choque */
