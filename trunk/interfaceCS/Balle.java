@@ -35,6 +35,7 @@ public class Balle extends Mobile{
 	public static final double VITESSE_REBOND = -2.3;
 	public static final Color COULEUR_BALLE = Color.gray;
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
+	public static final double COEFF_DIMINUTION_VITESSE_LATERALE = 4;
 
 	/* Un compteur */
 	/** Cet entier permet d'incr�menter le temps pour calculer les trajectoires de la balle uniquement dans le cas
@@ -97,14 +98,18 @@ public class Balle extends Mobile{
 			}
 		}
 
-		/* Risque de toucher le blob client */
-
-		if(super.getPosition().getY()>Blob.instanceClient.getPosition().getY()-Blob.BLOB_BODY_HAUTEUR){
-
+		if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceClient.getPosition().getX()>0
+				&& super.getPosition().getX()-Blob.instanceClient.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
+			if(isUnderClient()){
+				this.rebondirClient();
+			}
 		}
 
 
-		/* Risque de touche le filet */
+		/* Risque de toucher le filet */
+		if(Math.abs(this.getPosition().getX()*Pane.width-Pane.width/2)< Pane.width/100){
+			
+		}
 
 
 		/* Risque de toucher les murs */
@@ -145,13 +150,43 @@ public class Balle extends Mobile{
 			this.compteur = 0;
 		}
 	}
+	
+	private boolean isUnderClient(){
+		/* Le blod est en forme de demi cercle, on regarde donc si la balle et en dessous 
+		 Le centre le la balle peut circuler sur le cercle de centre : le centre de blob
+		 et de rayon rayon du blob + rayon de la balle */
+		double rayonX = Blob.BLOB_BODY_LARGEUR/2 + Balle.BALLE_LARGEUR/2;
+		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()
+				-(Blob.instanceClient.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)))/rayonX;
+		/* Calculons le point appartenant au cercle surface ayant cette position en X */
+		double angle = Math.acos(cos);
+		double sin = Math.sin(angle);
+		double hauteurCercle = Blob.instanceClient.getPosition().getY() - (sin*Blob.BLOB_BODY_HAUTEUR); 
+		return (super.getPosition().getY() > hauteurCercle);
+	}
+	
+	private void rebondirClient(){
+		double rayonX = Blob.BLOB_BODY_LARGEUR/2 + Balle.BALLE_LARGEUR/2;
+		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()
+				-(Blob.instanceClient.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)))/rayonX;
+		/* Calculons le point appartenant au cercle surface ayant cette position en X */
+		double angle = Math.acos(cos);
+		double sin = Math.sin(angle);
+		/* La balle doit donc rebondir sur le Blob !!*/
+		this.setAcceleration(new PointSam(0, 0));
+		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE;
+		double vitY = VITESSE_REBOND*sin;
+		this.nouvelleVitesse(new PointSam(vitX, vitY));
+		hasTouched = true;
+	}
 
 	private boolean isUnderServeur(){
 		/* Le blod est en forme de demi cercle, on regarde donc si la balle et en dessous 
 		 Le centre le la balle peut circuler sur le cercle de centre : le centre de blob
 		 et de rayon rayon du blob + rayon de la balle */
 		double rayonX = Blob.BLOB_BODY_LARGEUR/2 + Balle.BALLE_LARGEUR/2;
-		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()-(Blob.instanceServeur.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)))/rayonX;///Blob.BLOB_BODY_LARGEUR/2;
+		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()
+				-(Blob.instanceServeur.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)))/rayonX;
 		/* Calculons le point appartenant au cercle surface ayant cette position en X */
 		double angle = Math.acos(cos);
 		double sin = Math.sin(angle);
@@ -167,7 +202,7 @@ public class Balle extends Mobile{
 		double sin = Math.sin(angle);
 		/* La balle doit donc rebondir sur le Blob !!*/
 		this.setAcceleration(new PointSam(0, 0));
-		double vitX = -VITESSE_REBOND*cos/4;
+		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE;
 		double vitY = VITESSE_REBOND*sin;
 		this.nouvelleVitesse(new PointSam(vitX, vitY));
 		hasTouched = true;
