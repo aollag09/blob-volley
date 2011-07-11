@@ -1,4 +1,4 @@
-package interfaceCS;
+package serveur;
 
 /**
  * Classe représentant une partie !!
