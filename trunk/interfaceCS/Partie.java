@@ -75,6 +75,16 @@ public class Partie {
 	public int getScoreServeur() {
 		return scoreServeur;
 	}
+
+
+	public void setScoreClient(int scoreClient) {
+		this.scoreClient = scoreClient;
+	}
+
+
+	public void setScoreServeur(int scoreServeur) {
+		this.scoreServeur = scoreServeur;
+	}
 	
 	
 }
