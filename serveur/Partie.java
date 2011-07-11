@@ -65,6 +65,16 @@ public class Partie {
 			return Partie.PAS_GAGNANT;
 		}
 	}
+
+
+	public int getScoreClient() {
+		return scoreClient;
+	}
+
+
+	public int getScoreServeur() {
+		return scoreServeur;
+	}
 	
 	
 }
