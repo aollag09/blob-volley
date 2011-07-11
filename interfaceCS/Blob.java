@@ -24,6 +24,8 @@ public class Blob extends Mobile {
 	/** the eyes */
 	public final static double BLOB_EYES_LARGEUR = 0.006;
 	public final static double BLOB_EYES_HAUTEUR = 0.011;
+	public final static double BLOB_EYES_RAYON_LARGEUR = 0.004;
+	public final static double BLOB_EYES_RAYON_HAUTEUR = 0.010;
 	/** the link */
 	public static String LINK_BLOB_SERVEUR ="blobServeur.png"; 
 	public static String LINK_BLOB_CLIENT = "blobClient.png";
@@ -72,15 +74,18 @@ public class Blob extends Mobile {
 
 		/* On trace ensuite les yeux */
 		g.setColor(Color.black);
-		Point centre = new Point(
-				(int)(Pane.width*(super.getPosition().getX()+Blob.BLOB_BODY_LARGEUR*((this.isServeur)?(92-21):21)/92)),
-				(int)(Pane.height*(super.getPosition().getY() + (19-37)*Blob.BLOB_BODY_HAUTEUR/37))
-				);
-		g.fillOval((int)(centre.x-Blob.BLOB_EYES_LARGEUR*Pane.width/2),
-				(int)(centre.y-Blob.BLOB_EYES_HAUTEUR*Pane.height/2),
-				(int)(Blob.BLOB_EYES_LARGEUR*Pane.width),
-				(int)(Blob.BLOB_EYES_HAUTEUR*Pane.height)
-				);
+        PointSam centreOeil = new PointSam(
+                        super.getPosition().getX()+Blob.BLOB_BODY_LARGEUR*((this.isServeur)?(92-21):21)/92,
+                        super.getPosition().getY() + (19-37)*Blob.BLOB_BODY_HAUTEUR/37
+                        );
+        double angleAvecBalle = Math.atan(-Pane.height*(Balle.instance.getPosition().getY()-centreOeil.getY())/(Pane.width*(Balle.instance.getPosition().getX()-centreOeil.getX())));
+        int signeH = (Balle.instance.getPosition().getX()>centreOeil.getX())?1:-1;
+        int signeV = (Balle.instance.getPosition().getY()>centreOeil.getY())?1:-1;
+        g.fillOval((int)(Pane.width*(centreOeil.getX()+signeH*Math.abs(Math.cos(angleAvecBalle)*Blob.BLOB_EYES_RAYON_LARGEUR)-Blob.BLOB_EYES_LARGEUR/2)),
+                        (int)(Pane.height*(centreOeil.getY()+signeV*Math.abs(Math.sin(angleAvecBalle)*Blob.BLOB_EYES_RAYON_HAUTEUR)-Blob.BLOB_EYES_HAUTEUR/2)),
+                        (int)(Blob.BLOB_EYES_LARGEUR*Pane.width),
+                        (int)(Blob.BLOB_EYES_HAUTEUR*Pane.height)
+                        );
 
 
 	}
@@ -120,12 +125,12 @@ public class Blob extends Mobile {
 			}
 		}
 		
-		/* Cas généraux quelque soit la touche touchée appuyée lors du timer */
+		/* Cas gï¿½nï¿½raux quelque soit la touche touchï¿½e appuyï¿½e lors du timer */
 		if(isJumping){
-			/* On diminue la vitesse de montée pour faire redescendre le Blob */
+			/* On diminue la vitesse de montï¿½e pour faire redescendre le Blob */
 			//super.nouvelleVitesse(new PointSam(this.getVitesse().getX(), -this.getVitesse().getY()/100));
 			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-this.SAUT_ACCELERATION/6));
-			//System.out.println("Accélération ===> "+this.getAcceleration().getY());
+			//System.out.println("Accï¿½lï¿½ration ===> "+this.getAcceleration().getY());
 		}
 		if(this.getPosition().getX()*Pane.width<=0 ){
 			if(this.getPosition().getX()== 0){
@@ -134,7 +139,7 @@ public class Blob extends Mobile {
 				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 			}
 			else{
-				/* On remet à la position la plus à gauche */
+				/* On remet ï¿½ la position la plus ï¿½ gauche */
 				super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/2, super.getVitesse().getY()));
 				super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 			}
