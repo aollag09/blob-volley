@@ -36,6 +36,7 @@ public class Balle extends Mobile{
 	public static final Color COULEUR_BALLE = Color.gray;
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 	public static final double COEFF_DIMINUTION_VITESSE_LATERALE = 4;
+	public static final double COEFF_PRISE_EN_COMPTE_ANCIENNE_VITESSE_LATERAL = 0.8;
 
 	/* Un compteur */
 	/** Cet entier permet d'incr�menter le temps pour calculer les trajectoires de la balle uniquement dans le cas
@@ -174,7 +175,8 @@ public class Balle extends Mobile{
 		double sin = Math.sin(angle);
 		/* La balle doit donc rebondir sur le Blob !!*/
 		this.setAcceleration(new PointSam(0, 0));
-		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE;
+		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE
+				+Balle.COEFF_PRISE_EN_COMPTE_ANCIENNE_VITESSE_LATERAL*super.getVitesse().getX();
 		double vitY = VITESSE_REBOND*sin;
 		this.nouvelleVitesse(new PointSam(vitX, vitY));
 		hasTouched = true;
@@ -202,7 +204,8 @@ public class Balle extends Mobile{
 		double sin = Math.sin(angle);
 		/* La balle doit donc rebondir sur le Blob !!*/
 		this.setAcceleration(new PointSam(0, 0));
-		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE;
+		double vitX = -VITESSE_REBOND*cos/Balle.COEFF_DIMINUTION_VITESSE_LATERALE
+				+ Balle.COEFF_PRISE_EN_COMPTE_ANCIENNE_VITESSE_LATERAL*super.getVitesse().getX() ;
 		double vitY = VITESSE_REBOND*sin;
 		this.nouvelleVitesse(new PointSam(vitX, vitY));
 		hasTouched = true;
