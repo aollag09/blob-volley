@@ -2,6 +2,7 @@ package client;
 
 import interfaceCS.Balle;
 import interfaceCS.Blob;
+import interfaceCS.Partie;
 import interfaceCS.PointSam;
 
 import java.awt.event.MouseEvent;
@@ -12,7 +13,6 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import serveur.Partie;
 
 
 public class Main {
