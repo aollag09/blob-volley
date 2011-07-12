@@ -122,6 +122,9 @@ public class Blob extends Mobile {
 				this.isJumping = true;
 				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), Blob.SAUT_ACCELERATION));
 			}
+			else {
+				super.nouvelleVitesse(new PointSam(this.getVitesse().getX()/(1.04), this.getVitesse().getY()));
+			}
 		}
 		
 		/* Cas g�n�raux quelque soit la touche touch�e appuy�e lors du timer */
