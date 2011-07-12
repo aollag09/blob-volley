@@ -10,7 +10,7 @@ public class Partie {
 	/**
 	 * Les scores des joueurs
 	 */
-	private int scoreClient, scoreServeur;
+	private int scoreClient, scoreServeur,numeroTour = 0;
 	
 	/**
 	 * Les constantes d'état du jeu
@@ -37,6 +37,7 @@ public class Partie {
 	 */
 	public int clientMarque(){
 		this.scoreClient++;
+		this.setNumeroTour(this.getNumeroTour()+1);
 		return getEtat();
 	}
 	
@@ -46,6 +47,7 @@ public class Partie {
 	 */
 	public int serveurMarque(){
 		this.scoreServeur++;
+		this.setNumeroTour(this.getNumeroTour()+1);
 		return getEtat();
 	}
 	
@@ -84,6 +86,22 @@ public class Partie {
 
 	public void setScoreServeur(int scoreServeur) {
 		this.scoreServeur = scoreServeur;
+	}
+
+
+	/**
+	 * @return the numeroTour
+	 */
+	public int getNumeroTour() {
+		return numeroTour;
+	}
+
+
+	/**
+	 * @param numeroTour the numeroTour to set
+	 */
+	public void setNumeroTour(int numeroTour) {
+		this.numeroTour = numeroTour;
 	}
 	
 	
