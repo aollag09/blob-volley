@@ -122,18 +122,39 @@ public class Balle extends Mobile{
 
 
 			/* Risque de toucher le filet */
-			if(Math.abs((this.getPosition().getX()+Balle.BALLE_LARGEUR)*Pane.width-Pane.width/2)< Pane.width/100){
-				if(this.getPosition().getY() == 7.0/8.0){
-					/* Rebond au dessus du filet */
-					this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
-					hasTouched = true;
+			if(super.getPosition().getY() > 7.0/8.0){
+				if(super.getPosition().getX()+Balle.BALLE_LARGEUR > 0.5-(1.0/100.0)
+						&& super.getPosition().getX()<0.5-(1.0/100.0)){
+					/* La balle est dans le filet on étudie alors les différents cas : */
+					if(super.getPosition().getY()>7.2/8.0){
+						if(super.getPosition().getX()<0.5){
+							this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+							hasTouched = true;
+						}
+						else{
+							this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+							hasTouched = true;
+						}
+					}else{
+						this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
+						hasTouched = true;
+					}
+
 				}
-				if(this.getPosition().getY() > 7.0/8.0){
-					/* Bords du filet */
-					this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
-					hasTouched = true;
-				}
+
 			}
+			//			if(Math.abs((this.getPosition().getX()+Balle.BALLE_LARGEUR)*Pane.width-Pane.width/2)< Pane.width/100){
+			//				if(this.getPosition().getY() == 7.0/8.0){
+			//					/* Rebond au dessus du filet */
+			//					this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
+			//					hasTouched = true;
+			//				}
+			//				if(this.getPosition().getY() > 7.0/8.0){
+			//					/* Bords du filet */
+			//					this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+			//					hasTouched = true;
+			//				}
+			//			}
 
 
 			/* Risque de toucher les murs */
