@@ -90,7 +90,6 @@ public class Blob extends Mobile {
 	}
 
 	public void nextPosition(int typeOrdre){
-		//System.out.println(super.getAcceleration().getY());
 		switch(typeOrdre){
 		case IServeur.ORDRE_RESTE : 
 			/* On diminue par 2 la vitesse suivant l'axe des X */
@@ -98,22 +97,18 @@ public class Blob extends Mobile {
 			break;
 
 		case IServeur.ORDRE_GAUCHE :
-			//System.out.println("GAUCHE");
 			/* On augmente l'acc�lar�ation vers la gauche */
-			if(this.getPosition().getX()>0){
 				super.nouvelleAcceleration(new PointSam(
 						Math.max(-Blob.MAX_ACCELERATION,this.getAcceleration().getX()-0.2),
 						this.getAcceleration().getY()));	
-			}
 			break;
 
 		case IServeur.ORDRE_DROITE :
-			if((this.getPosition().getX()+ Blob.BLOB_BODY_LARGEUR)*Pane.width <((Pane.width/2 - Pane.width/100)) ){
+			
 				/* On augmente l'acc�lar�ation vers la gauche */
 				super.nouvelleAcceleration(new PointSam(
 						Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.2),
 						this.getAcceleration().getY()));
-			}
 			break;
 
 		case IServeur.ORDRE_SAUT :
@@ -133,6 +128,8 @@ public class Blob extends Mobile {
 			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-Blob.SAUT_ACCELERATION/6));
 		}
 		if(this.isServeur){
+			/* Si le blob est le serveur */
+			
 			if(this.getPosition().getX()*Pane.width<=0 ){
 				if(this.getPosition().getX()== 0){
 					/* On fait le rebond */
@@ -148,6 +145,33 @@ public class Blob extends Mobile {
 			}
 			if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width >= (int) (Pane.width/2 - Pane.width/100)){
 				if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width == (int) (Pane.width/2 - Pane.width/100)){
+					super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
+					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+				}
+				else{
+					super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/2, super.getVitesse().getY()));
+					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+				}
+			}
+		}else{
+			/* Si le blob est le client */
+			if(this.getPosition().getX()*Pane.width<=Pane.width/2 + Pane.width/100){
+				System.out.println("non");
+				if(this.getPosition().getX()== Pane.width/2 + Pane.width/100){
+					/* On fait le rebond */
+					super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
+					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+				}
+				else{
+					/* On remet � la position la plus � gauche */
+					super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/2, super.getVitesse().getY()));
+					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
+				}
+
+			}
+			if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width >= (int) (Pane.width)){
+				System.out.println("non2");
+				if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width == (int) (Pane.width)){
 					super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
 					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
 				}
