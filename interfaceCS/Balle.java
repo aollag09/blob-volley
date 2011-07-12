@@ -125,7 +125,7 @@ public class Balle extends Mobile{
 						&& super.getPosition().getX()<0.5-(1.0/100.0)){
 					/* La balle est dans le filet on étudie alors les différents cas : */
 					if(super.getPosition().getY()>7.2/8.0){
-						if(super.getPosition().getX()<0.5){
+						if(super.getPosition().getX()+BALLE_LARGEUR/2<0.5){
 							this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
 							hasTouched = true;
 						}

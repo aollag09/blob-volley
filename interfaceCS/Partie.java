@@ -22,7 +22,7 @@ public class Partie {
 	/**
 	 * Les constantes de condition de victoire
 	 */
-	public final static int POINTS_GAGNANTS = 21;
+	public final static int POINTS_GAGNANTS = 2;
 	public final static int POINTS_DIFF = 2;
 	
 	public Partie(){

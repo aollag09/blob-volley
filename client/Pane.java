@@ -2,6 +2,7 @@ package client;
 import interfaceCS.Balle;
 import interfaceCS.Blob;
 import interfaceCS.IServeur;
+import interfaceCS.Partie;
 import interfaceCS.PointSam;
 
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class Pane extends JPanel implements KeyListener {
 	public static final double LARGEUR_PANNEAU = 0.07;
 	public static final double HAUTEUR_PANNEAU = 0.15;
 
-
+	public static String[] infosServeur = new String[4];
 
 	private int ordre;
 
@@ -43,11 +44,6 @@ public class Pane extends JPanel implements KeyListener {
 		ActionListener al = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				Blob.instanceServeur.nextPosition(ordre);
-				Blob.instanceClient.nextPosition(ordre);
-				Balle.instance.nextPosition();
-				if (ordre == IServeur.ORDRE_SAUT)
-					ordre = IServeur.ORDRE_RESTE;
 				repaint();
 			}
 		};
@@ -82,31 +78,44 @@ public class Pane extends JPanel implements KeyListener {
 		Balle.instance.paintBalle(g);
 
 		/* On écrit les scores */
-		/* On trace dans un premier temps les panneaux */
-		g.setColor(Color.gray);
-		g.fill3DRect((int) (width/2-width*Pane.DECALAGE_SCORE),
-				-1, 
-				(int) (width*Pane.LARGEUR_PANNEAU),
-				(int) (height*Pane.HAUTEUR_PANNEAU),
-				true);
-		g.fill3DRect((int) (width/2+width*Pane.DECALAGE_SCORE-width*Pane.LARGEUR_PANNEAU),
-				-1, 
-				(int) (width*Pane.LARGEUR_PANNEAU),
-				(int) (height*Pane.HAUTEUR_PANNEAU),
-				true);
+		if(Main.partieEnCours.getEtat() == Partie.PAS_GAGNANT){
+			/* On trace dans un premier temps les panneaux */
+			g.setColor(Color.gray);
+			g.fill3DRect((int) (width/2-width*Pane.DECALAGE_SCORE),
+					-1, 
+					(int) (width*Pane.LARGEUR_PANNEAU),
+					(int) (height*Pane.HAUTEUR_PANNEAU),
+					true);
+			g.fill3DRect((int) (width/2+width*Pane.DECALAGE_SCORE-width*Pane.LARGEUR_PANNEAU),
+					-1, 
+					(int) (width*Pane.LARGEUR_PANNEAU),
+					(int) (height*Pane.HAUTEUR_PANNEAU),
+					true);
 
-		g.setColor(Color.white);
-		Font f = new Font("Dialog", Font.BOLD, width/30);
-		g.setFont(f);
-		
-		g.drawString(""+Main.partieEnCours.getScoreServeur(),
-				(int)(width/2-width*Pane.DECALAGE_SCORE + Pane.LARGEUR_PANNEAU*Pane.width*0.3),
-				(int)(height*Pane.HAUTEUR_PANNEAU*0.6));
-		g.drawString(""+Main.partieEnCours.getScoreClient(),
-				(int)(width/2+width*Pane.DECALAGE_SCORE - Pane.LARGEUR_PANNEAU*Pane.width*0.7),
-				(int)(height*Pane.HAUTEUR_PANNEAU*0.6));
-	
+			g.setColor(Color.white);
+			Font f = new Font("Dialog", Font.BOLD, width/30);
+			g.setFont(f);
+			g.drawString(""+Main.partieEnCours.getScoreServeur(),
+					(int)(width/2-width*Pane.DECALAGE_SCORE + Pane.LARGEUR_PANNEAU*Pane.width*((Main.partieEnCours.getScoreServeur()<10)?0.42:0.3)),
+					(int)(height*Pane.HAUTEUR_PANNEAU*0.6));
+			g.drawString(""+Main.partieEnCours.getScoreClient(),
+					(int)(width/2+width*Pane.DECALAGE_SCORE - Pane.LARGEUR_PANNEAU*Pane.width*((Main.partieEnCours.getScoreServeur()<10)?0.58:0.7)),
+					(int)(height*Pane.HAUTEUR_PANNEAU*0.6));
 
+		}else{
+			if(Main.partieEnCours.getEtat() == Partie.CLIENT_GAGNE){
+				g.setColor(Color.white);
+				Font f = new Font("Dialog", Font.BOLD, width/30);
+				g.setFont(f);
+				g.drawString("Le blob rouge remporte la partie !!", width/2 - width/4, height/6);
+			}
+			if(Main.partieEnCours.getEtat() == Partie.SERVEUR_GAGNE){
+				g.setColor(Color.white);
+				Font f = new Font("Dialog", Font.BOLD, width/30);
+				g.setFont(f);
+				g.drawString("Le blob violet remporte la partie !!", width/2 - width/4, height/6);
+			}
+		}
 	}
 
 
@@ -118,6 +127,7 @@ public class Pane extends JPanel implements KeyListener {
 		case KeyEvent.VK_RIGHT : this.ordre = IServeur.ORDRE_DROITE;break;
 		case KeyEvent.VK_SPACE : this.ordre = IServeur.ORDRE_SAUT;break;
 		}
+		Main.iserveur.envoyerDonnees(ordre);
 	}
 
 
