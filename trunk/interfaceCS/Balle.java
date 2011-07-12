@@ -143,22 +143,10 @@ public class Balle extends Mobile{
 				}
 
 			}
-			//			if(Math.abs((this.getPosition().getX()+Balle.BALLE_LARGEUR)*Pane.width-Pane.width/2)< Pane.width/100){
-			//				if(this.getPosition().getY() == 7.0/8.0){
-			//					/* Rebond au dessus du filet */
-			//					this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
-			//					hasTouched = true;
-			//				}
-			//				if(this.getPosition().getY() > 7.0/8.0){
-			//					/* Bords du filet */
-			//					this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
-			//					hasTouched = true;
-			//				}
-			//			}
 
 
 			/* Risque de toucher les murs */
-			if(super.getPosition().getX()<0 || super.getPosition().getX()>1){
+			if(super.getPosition().getX()<0 || super.getPosition().getX()+Balle.BALLE_LARGEUR>1){
 				super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
 				hasTouched = true;
 			}
