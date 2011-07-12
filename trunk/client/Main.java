@@ -39,15 +39,15 @@ public class Main {
 		f.setLocationRelativeTo(null);
 		f.setVisible(true);
 		
-		JFrame menu = new JFrame();
-		menu.add(new Menu());
-		menu.setTitle("Blob Volley");
-		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
-		menu.setIconImage(ic.getImage());
-		menu.pack();
-		menu.setLocationRelativeTo(null);
-		menu.setVisible(true);
+//		JFrame menu = new JFrame();
+//		menu.add(new Menu());
+//		menu.setTitle("Blob Volley");
+//		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
+//		menu.setIconImage(ic.getImage());
+//		menu.pack();
+//		menu.setLocationRelativeTo(null);
+//		menu.setVisible(true);
 	}
 }
 
