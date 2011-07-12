@@ -2,6 +2,7 @@ package client;
 
 import interfaceCS.Balle;
 import interfaceCS.Blob;
+import interfaceCS.IServeur;
 import interfaceCS.Partie;
 import interfaceCS.PointSam;
 
@@ -22,8 +23,13 @@ public class Main {
 	public static boolean jeuEnCours = false;
 	
 	public static Partie partieEnCours = null;
+
+	public static IServeur serveurHost;
+	
+	public static IServeur serveurClient;
 	
 	public static JFrame menu, jeu;
+
 
 	public static void main(String[] args){
 
