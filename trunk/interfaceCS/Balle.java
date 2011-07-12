@@ -206,8 +206,8 @@ public class Balle extends Mobile{
 		}else{
 			/* Au tour du Client de servir */
 			super.setPosition(new PointSam(1-Balle.BALLE_LARGEUR,0));
-			this.positionInitiale = new PointSam(0,0);
-			this.vitesseInitiale = new PointSam(VITESSE_INITIALE_LATERALE,0);
+			this.positionInitiale = new PointSam(1-Balle.BALLE_LARGEUR,0);
+			this.vitesseInitiale = new PointSam(-VITESSE_INITIALE_LATERALE,0);
 			this.compteur = 0;
 			hasTouched = true;
 		}
