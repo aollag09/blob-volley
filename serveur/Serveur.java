@@ -3,6 +3,7 @@ package serveur;
 import interfaceCS.Balle;
 import interfaceCS.Blob;
 import interfaceCS.IServeur;
+import interfaceCS.Partie;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -82,21 +85,37 @@ public class Serveur implements Runnable {
 		}
 	}
 
+	public static void launchServeur(){
+		Serveur.serveur = new Serveur();
+		Thread t = new Thread(Serveur.serveur);
+		t.start();
+	}
+
 	/**
 	 * Thread runnable pour mettre le serveur en multithreading.
 	 */
 	public void run() {
-		ActionListener lAction = new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				Balle.instance.nextPosition();
-				Blob.instanceClient.nextPosition(ordreDistant);
-				Blob.instanceServeur.nextPosition(ordreLocal);
-			}
-		};
-		Timer time = new Timer(IServeur.DELAY, lAction);
-		time.start();
-		
 		try {
+			JFrame attente = new JFrame();
+			attente.add(new JLabel("En attente d'une connexion..."));
+			attente.setVisible(true);
+			this.server.accept();
+			attente.dispose();
+
+			Main.jeuEnCours = true;
+			Main.partieEnCours = new Partie();
+
+			ActionListener lAction = new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					Balle.instance.nextPosition();
+					Blob.instanceClient.nextPosition(ordreDistant);
+					Blob.instanceServeur.nextPosition(ordreLocal);
+				}
+			};
+			Timer time = new Timer(IServeur.DELAY, lAction);
+			time.start();
+
+
 			while (Main.jeuEnCours){
 
 				this.client = this.server.accept();
