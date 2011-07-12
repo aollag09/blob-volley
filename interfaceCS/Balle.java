@@ -3,8 +3,6 @@ package interfaceCS;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.text.Position;
-
 import client.Main;
 import client.Pane;
 

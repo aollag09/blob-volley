@@ -2,7 +2,6 @@ package interfaceCS;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import javax.swing.ImageIcon;
 
 import client.Pane;
