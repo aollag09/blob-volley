@@ -156,7 +156,6 @@ public class Blob extends Mobile {
 		}else{
 			/* Si le blob est le client */
 			if(this.getPosition().getX()*Pane.width<=Pane.width/2 + Pane.width/100){
-				System.out.println("non");
 				if(this.getPosition().getX()== Pane.width/2 + Pane.width/100){
 					/* On fait le rebond */
 					super.nouvelleVitesse(new PointSam(Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
@@ -170,7 +169,6 @@ public class Blob extends Mobile {
 
 			}
 			if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width >= (int) (Pane.width)){
-				System.out.println("non2");
 				if((this.getPosition().getX() + Blob.BLOB_BODY_LARGEUR)*Pane.width == (int) (Pane.width)){
 					super.nouvelleVitesse(new PointSam(-Math.abs(super.getVitesse().getX())/4, super.getVitesse().getY()));
 					super.setAcceleration(new PointSam(0, super.getAcceleration().getY()));
