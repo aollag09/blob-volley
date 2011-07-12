@@ -24,9 +24,7 @@ public class Main {
 	
 	public static Partie partieEnCours = null;
 
-	public static IServeur serveurHost;
-	
-	public static IServeur serveurClient;
+	public static IServeur iserveur;
 	
 	public static JFrame menu, jeu;
 
