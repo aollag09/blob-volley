@@ -38,7 +38,7 @@ public class Balle extends Mobile{
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 	public static final double COEFF_DIMINUTION_VITESSE_LATERALE = 4;
 	public static final double COEFF_PRISE_EN_COMPTE_ANCIENNE_VITESSE_LATERAL = 0.8;
-	public static final double COMPTEUR_AVANT_DEBUT_POINT = 50;
+	public static final double COMPTEUR_AVANT_DEBUT_POINT = 100;
 	public static final double VITESSE_INITIALE_LATERALE = 0.1;
 
 	/* Un compteur */
@@ -157,9 +157,9 @@ public class Balle extends Mobile{
 					super.setAcceleration(new PointSam(0,0));
 					/* On donne un point au gagnant en fonction de la position de la balle */
 					if(super.getPosition().getX()<0.5)
-						Main.partieEnCours.serveurMarque();
-					else
 						Main.partieEnCours.clientMarque();
+					else
+						Main.partieEnCours.serveurMarque();
 
 					if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) == 1 ){
 						try{
