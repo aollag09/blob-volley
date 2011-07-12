@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -14,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
+
+import serveur.Serveur;
 
 public class Menu extends JPanel {
 
@@ -58,6 +62,13 @@ public class Menu extends JPanel {
 		serveur.add(corpsServeur, BorderLayout.CENTER);
 		
 		JButton validServeur = new JButton("Hoster la partie");
+		validServeur.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				Serveur.launchServeur();
+			}
+			
+		});
 		serveur.add(validServeur, BorderLayout.SOUTH);
 		
 		menu.add(serveur);

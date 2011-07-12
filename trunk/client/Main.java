@@ -22,32 +22,37 @@ public class Main {
 	public static boolean jeuEnCours = false;
 	
 	public static Partie partieEnCours = null;
+	
+	public static JFrame menu, jeu;
 
 	public static void main(String[] args){
 
 		Main.partieEnCours = new Partie();
 		Main.jeuEnCours = true;
 		
-		JFrame f = new JFrame();
-		f.add(Pane.instance);
-		f.setTitle("Blob Volley");
-		f.addKeyListener(Pane.instance);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame jeu = new JFrame();
+		jeu.add(Pane.instance);
+		jeu.setTitle("Blob Volley");
+		jeu.addKeyListener(Pane.instance);
+		jeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon ic2= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
-		f.setIconImage(ic2.getImage());
-		f.setSize(1060,525);
-		f.setLocationRelativeTo(null);
-		f.setVisible(true);
+		jeu.setIconImage(ic2.getImage());
+		jeu.setSize(1060,525);
+		jeu.setLocationRelativeTo(null);
+		jeu.setVisible(true);
 		
-//		JFrame menu = new JFrame();
-//		menu.add(new Menu());
-//		menu.setTitle("Blob Volley");
-//		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
-//		menu.setIconImage(ic.getImage());
-//		menu.pack();
-//		menu.setLocationRelativeTo(null);
-//		menu.setVisible(true);
+		
+		
+		// le début
+		menu = new JFrame();
+		menu.add(new Menu());
+		menu.setTitle("Blob Volley");
+		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
+		menu.setIconImage(ic.getImage());
+		menu.pack();
+		menu.setLocationRelativeTo(null);
+		menu.setVisible(true);
 	}
 }
 
