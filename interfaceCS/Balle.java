@@ -195,7 +195,6 @@ public class Balle extends Mobile{
 	/** Méthode appelée à chaque fin de point pour relancer la balle */
 	private void repositionnerBalle() {
 		this.compteurDebut = 0;
-		System.out.println(Main.partieEnCours.getNumeroTour());
 		if(Main.partieEnCours.getNumeroTour() % 2 == 0){
 			/* Au tour du serveur de servir */
 			super.setPosition(new PointSam(0,0));
