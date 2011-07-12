@@ -57,7 +57,7 @@ public class Menu extends JPanel {
 		JLabel port = new JLabel("Port : ");
 		corpsServeur.add(port);
 
-		final JFormattedTextField lePort = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		final JTextField lePort = new JTextField();
 		lePort.setPreferredSize(new Dimension(70, 20));
 		corpsServeur.add(lePort);
 
@@ -67,13 +67,8 @@ public class Menu extends JPanel {
 		validServeur.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Main.port = Integer.parseInt(lePort.getText());
-				} catch (Exception ee){
-					Main.port = 12345;
-				}
+				Main.port = Integer.parseInt(lePort.getText());
 				Serveur.launchServeur();
-				Main.iserveur = new IServeur();
 			}
 
 		});
@@ -106,7 +101,7 @@ public class Menu extends JPanel {
 		JLabel port2 = new JLabel("Port : ");
 		corpsClient.add(port2);
 
-		final JFormattedTextField lePort2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		final JTextField lePort2 = new JTextField();
 		lePort2.setPreferredSize(new Dimension(70, 20));
 		corpsClient.add(lePort2);
 
@@ -116,13 +111,12 @@ public class Menu extends JPanel {
 		validerClient.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				int port;
-				try {
-					port = Integer.parseInt(lePort2.getText());
-				} catch (Exception eee){
-					port = 12345;
+				Main.port = Integer.parseInt(lePort2.getText());
+				Main.iserveur = new IServeur(lIp.getText(), Integer.parseInt(lePort2.getText()));
+				if (Main.iserveur.isLaunched()){
+					Main.menu.dispose();
+					Main.lancerJeu();
 				}
-				Main.iserveur = new IServeur(lIp.getText(), port);
 			}
 			
 		});

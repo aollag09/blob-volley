@@ -97,6 +97,13 @@ public class IServeur {
 	}
 	
 	/**
+	 * Fonction permettant de savoir si l'interface est bien lancée
+	 */
+	public boolean isLaunched(){
+		return this.s!=null;
+	}
+	
+	/**
 	 * Fonction permettant d'instancer les différentes variables gérant les connexions au serveur.
 	 */
 	public void demarrage(){

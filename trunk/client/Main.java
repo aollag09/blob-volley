@@ -31,22 +31,7 @@ public class Main {
 
 	public static void main(String[] args){
 
-		Main.partieEnCours = new Partie();
-		Main.jeuEnCours = true;
-		
-		JFrame jeu = new JFrame();
-		jeu.add(Pane.instance);
-		jeu.setTitle("Blob Volley");
-		jeu.addKeyListener(Pane.instance);
-		jeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ImageIcon ic2= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
-		jeu.setIconImage(ic2.getImage());
-		jeu.setSize(1060,525);
-		jeu.setLocationRelativeTo(null);
-		jeu.setVisible(true);
-		
-		
-		
+				
 		// le début
 		menu = new JFrame();
 		menu.add(new Menu());
@@ -57,6 +42,22 @@ public class Main {
 		menu.pack();
 		menu.setLocationRelativeTo(null);
 		menu.setVisible(true);
+	}
+	
+	public static void lancerJeu(){
+		Main.partieEnCours = new Partie();
+		Main.jeuEnCours = true;
+		
+		jeu = new JFrame();
+		jeu.add(Pane.instance);
+		jeu.setTitle("Blob Volley");
+		jeu.addKeyListener(Pane.instance);
+		jeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ImageIcon ic2= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
+		jeu.setIconImage(ic2.getImage());
+		jeu.setSize(1060,525);
+		jeu.setLocationRelativeTo(null);
+		jeu.setVisible(true);
 	}
 }
 

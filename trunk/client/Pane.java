@@ -70,14 +70,14 @@ public class Pane extends JPanel implements KeyListener {
 				(int)(width/50),
 				(int) (height/8));
 
-		/* On déssine les Blob */
+		/* On dï¿½ssine les Blob */
 		Blob.instanceServeur.paintBlob(g);
 		Blob.instanceClient.paintBlob(g);
 
-		/* On déssine la balle */
+		/* On dï¿½ssine la balle */
 		Balle.instance.paintBalle(g);
 
-		/* On écrit les scores */
+		/* On ï¿½crit les scores */
 		if(Main.partieEnCours.getEtat() == Partie.PAS_GAGNANT){
 			/* On trace dans un premier temps les panneaux */
 			g.setColor(Color.gray);
@@ -103,17 +103,21 @@ public class Pane extends JPanel implements KeyListener {
 					(int)(height*Pane.HAUTEUR_PANNEAU*0.6));
 
 		}else{
-			if(Main.partieEnCours.getEtat() == Partie.CLIENT_GAGNE){
+			if((Main.partieEnCours.getEtat() == Partie.CLIENT_GAGNE && Main.iserveur.getTypeServeur()==IServeur.SERVEUR_DISTANT)
+					|| (Main.partieEnCours.getEtat() == Partie.SERVEUR_GAGNE && Main.iserveur.getTypeServeur()==IServeur.SERVEUR_LOCAL)){
 				g.setColor(Color.white);
 				Font f = new Font("Dialog", Font.BOLD, width/30);
 				g.setFont(f);
-				g.drawString("Le blob rouge remporte la partie !!", width/2 - width/4, height/6);
+				g.drawString("Vous remportez la partie !!", width/2 - width/4, height/6);
+				Main.jeuEnCours = false;
 			}
-			if(Main.partieEnCours.getEtat() == Partie.SERVEUR_GAGNE){
+			if((Main.partieEnCours.getEtat() == Partie.CLIENT_GAGNE && Main.iserveur.getTypeServeur()==IServeur.SERVEUR_LOCAL)
+					|| (Main.partieEnCours.getEtat() == Partie.SERVEUR_GAGNE && Main.iserveur.getTypeServeur()==IServeur.SERVEUR_DISTANT)){
 				g.setColor(Color.white);
 				Font f = new Font("Dialog", Font.BOLD, width/30);
 				g.setFont(f);
-				g.drawString("Le blob violet remporte la partie !!", width/2 - width/4, height/6);
+				g.drawString("Vous perdez la partie !!", width/2 - width/4, height/6);
+				Main.jeuEnCours = false;
 			}
 		}
 	}

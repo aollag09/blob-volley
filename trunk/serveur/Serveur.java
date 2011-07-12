@@ -7,15 +7,19 @@ import interfaceCS.Partie;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 
 import client.Main;
 
@@ -64,11 +68,11 @@ public class Serveur implements Runnable {
 	/**
 	 * ServerSocket du serveur
 	 */
-	private ServerSocket server;
+	private ServerSocket server = null;
 	/**
 	 * Socket du client potentiel.
 	 */
-	private Socket client;
+	private Socket client = null;
 
 
 
@@ -84,11 +88,17 @@ public class Serveur implements Runnable {
 			JOptionPane.showMessageDialog(null, "Impossible de créer le serveur !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	public boolean isLaunched(){
+		return this.server != null;
+	}
 
 	public static void launchServeur(){
 		Serveur.serveur = new Serveur();
-		Thread t = new Thread(Serveur.serveur);
-		t.start();
+		if (Serveur.serveur.isLaunched()){
+			Thread t = new Thread(Serveur.serveur);
+			t.start();
+		}
 	}
 
 	/**
@@ -96,16 +106,20 @@ public class Serveur implements Runnable {
 	 */
 	public void run() {
 		try {
-			JFrame attente = new JFrame();
+			JDialog attente = new JDialog(Main.menu, "Attente de connexion", false);
+			
 			attente.add(new JLabel("En attente d'une connexion..."));
 			attente.pack();
 			attente.setLocationRelativeTo(null);
 			attente.setVisible(true);
-			this.server.accept();
-			attente.dispose();
+			attente.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+			this.client = this.server.accept();
 
-			Main.jeuEnCours = true;
-			Main.partieEnCours = new Partie();
+			Main.iserveur = new IServeur();
+			attente.dispose();	
+
+			Main.menu.dispose();
+			Main.lancerJeu();
 
 			ActionListener lAction = new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
