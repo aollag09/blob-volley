@@ -104,7 +104,6 @@ public class Blob extends Mobile {
 			break;
 
 		case IServeur.ORDRE_DROITE :
-			
 				/* On augmente l'acc�lar�ation vers la gauche */
 				super.nouvelleAcceleration(new PointSam(
 						Math.min(Blob.MAX_ACCELERATION,this.getAcceleration().getX()+0.2),
