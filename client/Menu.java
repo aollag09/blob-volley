@@ -1,5 +1,7 @@
 package client;
 
+import interfaceCS.IServeur;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -71,6 +73,7 @@ public class Menu extends JPanel {
 					Main.port = 12345;
 				}
 				Serveur.launchServeur();
+				Main.iserveur = new IServeur();
 			}
 
 		});
@@ -96,20 +99,33 @@ public class Menu extends JPanel {
 		JLabel ip = new JLabel("IP : ");
 		corpsClient.add(ip);
 
-		JTextField lIp = new JTextField();
+		final JTextField lIp = new JTextField();
 		lIp.setPreferredSize(new Dimension(100, 20));
 		corpsClient.add(lIp);
 
 		JLabel port2 = new JLabel("Port : ");
 		corpsClient.add(port2);
 
-		JFormattedTextField lePort2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		final JFormattedTextField lePort2 = new JFormattedTextField(NumberFormat.getIntegerInstance());
 		lePort2.setPreferredSize(new Dimension(70, 20));
 		corpsClient.add(lePort2);
 
 		client.add(corpsClient, BorderLayout.CENTER);
 
 		JButton validerClient = new JButton("Rejoindre la Partie");
+		validerClient.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e) {
+				int port;
+				try {
+					port = Integer.parseInt(lePort2.getText());
+				} catch (Exception eee){
+					port = 12345;
+				}
+				Main.iserveur = new IServeur(lIp.getText(), port);
+			}
+			
+		});
 		client.add(validerClient, BorderLayout.SOUTH);
 
 		menu.add(client);
