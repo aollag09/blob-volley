@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.text.Position;
 
+import client.Main;
 import client.Pane;
 
 /**
@@ -37,6 +38,8 @@ public class Balle extends Mobile{
 	public static final Color COULEUR_CONTOUR_BALLE = Color.black;
 	public static final double COEFF_DIMINUTION_VITESSE_LATERALE = 4;
 	public static final double COEFF_PRISE_EN_COMPTE_ANCIENNE_VITESSE_LATERAL = 0.8;
+	public static final double COMPTEUR_AVANT_DEBUT_POINT = 50;
+	public static final double VITESSE_INITIALE_LATERALE = 0.1;
 
 	/* Un compteur */
 	/** Cet entier permet d'incrï¿½menter le temps pour calculer les trajectoires de la balle uniquement dans le cas
@@ -47,11 +50,18 @@ public class Balle extends Mobile{
 	 */
 	private double compteur = 0;
 
+	/**
+	 * Le compteur avant le début de la partie
+	 */
+	private int compteurDebut = 0;
+
+	/** Un compteur avant le début du point */
+
 	/** Le point initiale du choc */
 	private PointSam positionInitiale;
 	/** La vitesse initiale du choc */
 	private PointSam vitesseInitiale;
-	
+
 	/** Un boolean pour savoir si la balle a eu une colision */ 
 	private boolean hasTouched;
 
@@ -60,12 +70,13 @@ public class Balle extends Mobile{
 	private Balle(){
 		super();
 		this.positionInitiale = new PointSam(0,0);
+		this.vitesseInitiale = new PointSam(VITESSE_INITIALE_LATERALE,0);
 	}
 
 	private Balle(PointSam p){
 		super(p);
 		this.positionInitiale = new PointSam(0,0);
-		this.vitesseInitiale = new PointSam(0.1,0);
+		this.vitesseInitiale = new PointSam(VITESSE_INITIALE_LATERALE,0);
 	}
 
 	public void paintBalle(Graphics g){
@@ -84,83 +95,126 @@ public class Balle extends Mobile{
 
 	/** Mï¿½thode appelï¿½ ï¿½ chaque delay pour recalculer la position de la balle */
 	public void nextPosition(){
-		this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
+		if(compteurDebut < Balle.COMPTEUR_AVANT_DEBUT_POINT)
+			compteurDebut++;
+		else{
+			this.setCompteur(this.compteur+((IServeur.DELAY+0.0)/1000));
 
-		/* Un boolean pour savoir si la balle a touche quelque chose lors de son trajet */
-		hasTouched = false;
+			/* Un boolean pour savoir si la balle a touche quelque chose lors de son trajet */
+			hasTouched = false;
 
-		/* On test ensuite si la balle risque de toucher un blob */
+			/* On test ensuite si la balle risque de toucher un blob */
 
-		/* Risque de toucher le blob serveur */
-		if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceServeur.getPosition().getX()>0
-				&& super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
-			if(isUnderServeur()){
-				this.rebondirServeur();
+			/* Risque de toucher le blob serveur */
+			if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceServeur.getPosition().getX()>0
+					&& super.getPosition().getX()-Blob.instanceServeur.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
+				if(isUnderServeur()){
+					this.rebondirServeur();
+				}
 			}
-		}
 
-		if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceClient.getPosition().getX()>0
-				&& super.getPosition().getX()-Blob.instanceClient.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
-			if(isUnderClient()){
-				this.rebondirClient();
+			if(super.getPosition().getX()+Balle.BALLE_LARGEUR-Blob.instanceClient.getPosition().getX()>0
+					&& super.getPosition().getX()-Blob.instanceClient.getPosition().getX()< Blob.BLOB_BODY_LARGEUR){
+				if(isUnderClient()){
+					this.rebondirClient();
+				}
 			}
-		}
 
 
-		/* Risque de toucher le filet */
-		if(Math.abs((this.getPosition().getX()+Balle.BALLE_LARGEUR)*Pane.width-Pane.width/2)< Pane.width/100){
-			if(this.getPosition().getY() == 7.0/8.0){
-				/* Rebond au dessus du filet */
-				this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
+			/* Risque de toucher le filet */
+			if(Math.abs((this.getPosition().getX()+Balle.BALLE_LARGEUR)*Pane.width-Pane.width/2)< Pane.width/100){
+				if(this.getPosition().getY() == 7.0/8.0){
+					/* Rebond au dessus du filet */
+					this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
+					hasTouched = true;
+				}
+				if(this.getPosition().getY() > 7.0/8.0){
+					/* Bords du filet */
+					this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+					hasTouched = true;
+				}
+			}
+
+
+			/* Risque de toucher les murs */
+			if(super.getPosition().getX()<0 || super.getPosition().getX()>1){
+				super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
 				hasTouched = true;
 			}
-			if(this.getPosition().getY() > 7.0/8.0){
-				/* Bords du filet */
-				this.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
-				hasTouched = true;
+
+
+
+			////////////////////////////////////
+			///// La balle na rien touché //////
+			////////////////////////////////////
+
+			/* Si la balle ne touche certes rien mais tombe en dessous de zero en Y: */
+			if(! hasTouched){
+				if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) >= 1 ){
+					/* La balle est tombée par terre */
+					super.setPosition(new PointSam(super.getPosition().getX(), 1-Balle.BALLE_HAUTEUR));
+					super.setVitesse(new PointSam(0,0));
+					super.setAcceleration(new PointSam(0,0));
+					/* On donne un point au gagnant en fonction de la position de la balle */
+					if(super.getPosition().getX()<0.5)
+						Main.partieEnCours.serveurMarque();
+					else
+						Main.partieEnCours.clientMarque();
+
+					if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) == 1 ){
+						try{
+							Thread.sleep(50);
+						}catch (Exception e) {}
+					}
+
+					/* On relance la balle */
+					this.repositionnerBalle();
+
+				}else{
+					/* On modifie la positon de la balle avec sa nouvelle position */
+					super.nouvellePosition(this.tomber());
+					/* On regarde si la balle ne va pas traverser un mur ... */
+					if(isUnderServeur()){
+						this.rebondirServeur();
+						/* On reinitialise les paramètres du choque */
+						this.positionInitiale = super.getPosition();
+						this.vitesseInitiale = super.getVitesse();
+						this.compteur = 0;
+					}
+
+				}
+			}else{
+				/* On reinitialise les paramètres du choque */
+				this.positionInitiale = super.getPosition();
+				this.vitesseInitiale = super.getVitesse();
+				this.compteur = 0;
 			}
 		}
+	}
 
-
-		/* Risque de toucher les murs */
-		if(super.getPosition().getX()<0 || super.getPosition().getX()>1){
-			super.nouvelleVitesse(new PointSam(-super.getVitesse().getX(),super.getVitesse().getY()));
+	/** Méthode appelée à chaque fin de point pour relancer la balle */
+	private void repositionnerBalle() {
+		this.compteurDebut = 0;
+		System.out.println(Main.partieEnCours.getNumeroTour());
+		if(Main.partieEnCours.getNumeroTour() % 2 == 0){
+			/* Au tour du serveur de servir */
+			super.setPosition(new PointSam(0,0));
+			this.positionInitiale = new PointSam(0,0);
+			this.vitesseInitiale = new PointSam(VITESSE_INITIALE_LATERALE,0);
+			this.compteur = 0;
+			hasTouched = true;
+		}else{
+			/* Au tour du Client de servir */
+			super.setPosition(new PointSam(1-Balle.BALLE_LARGEUR,0));
+			this.positionInitiale = new PointSam(0,0);
+			this.vitesseInitiale = new PointSam(VITESSE_INITIALE_LATERALE,0);
+			this.compteur = 0;
 			hasTouched = true;
 		}
 
 
-
-		////////////////////////////////////
-		///// La balle na rien touché //////
-		////////////////////////////////////
-
-		/* Si la balle ne touche certes rien mais tombe en dessous de zero en Y: */
-		if(! hasTouched){
-			if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) >= 1 ){
-				super.setPosition(new PointSam(super.getPosition().getX(), 1-Balle.BALLE_HAUTEUR));
-				super.setVitesse(new PointSam(0,0));
-				super.setAcceleration(new PointSam(0,0));
-			}else{
-				/* On modifie la positon de la balle avec sa nouvelle position */
-				super.nouvellePosition(this.tomber());
-				/* On regarde si la balle ne va pas traverser un mur ... */
-				if(isUnderServeur()){
-					this.rebondirServeur();
-					/* On reinitialise les paramètres du choque */
-					this.positionInitiale = super.getPosition();
-					this.vitesseInitiale = super.getVitesse();
-					this.compteur = 0;
-				}
-
-			}
-		}else{
-			/* On reinitialise les paramètres du choque */
-			this.positionInitiale = super.getPosition();
-			this.vitesseInitiale = super.getVitesse();
-			this.compteur = 0;
-		}
 	}
-	
+
 	private boolean isUnderClient(){
 		/* Le blod est en forme de demi cercle, on regarde donc si la balle et en dessous 
 		 Le centre le la balle peut circuler sur le cercle de centre : le centre de blob
@@ -174,7 +228,7 @@ public class Balle extends Mobile{
 		double hauteurCercle = Blob.instanceClient.getPosition().getY() - (sin*Blob.BLOB_BODY_HAUTEUR); 
 		return (super.getPosition().getY() > hauteurCercle);
 	}
-	
+
 	private void rebondirClient(){
 		double rayonX = Blob.BLOB_BODY_LARGEUR/2 + Balle.BALLE_LARGEUR/2;
 		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()
@@ -204,7 +258,7 @@ public class Balle extends Mobile{
 		double hauteurCercle = Blob.instanceServeur.getPosition().getY() - (sin*Blob.BLOB_BODY_HAUTEUR); 
 		return (super.getPosition().getY() > hauteurCercle);
 	}
-	
+
 	private void rebondirServeur(){
 		double rayonX = Blob.BLOB_BODY_LARGEUR/2 + Balle.BALLE_LARGEUR/2;
 		double cos = ((Balle.BALLE_LARGEUR/2+super.getPosition().getX()-(Blob.instanceServeur.getPosition().getX()+Blob.BLOB_BODY_LARGEUR/2)))/rayonX;///Blob.BLOB_BODY_LARGEUR/2;
@@ -263,6 +317,20 @@ public class Balle extends Mobile{
 	 */
 	public void setVitesseInitiale(PointSam vitesseInitiale) {
 		this.vitesseInitiale = vitesseInitiale;
+	}
+
+	/**
+	 * @return the compteurDebut
+	 */
+	public int getCompteurDebut() {
+		return compteurDebut;
+	}
+
+	/**
+	 * @param compteurDebut the compteurDebut to set
+	 */
+	public void setCompteurDebut(int compteurDebut) {
+		this.compteurDebut = compteurDebut;
 	}
 
 

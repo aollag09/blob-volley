@@ -121,16 +121,14 @@ public class Blob extends Mobile {
 			/* On augmente l'acc�l�ration vers le haut */
 			if(!this.isJumping){
 				this.isJumping = true;
-				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), this.SAUT_ACCELERATION));
+				super.nouvelleAcceleration(new PointSam(super.getAcceleration().getX(), Blob.SAUT_ACCELERATION));
 			}
 		}
 		
 		/* Cas g�n�raux quelque soit la touche touch�e appuy�e lors du timer */
 		if(isJumping){
 			/* On diminue la vitesse de mont�e pour faire redescendre le Blob */
-			//super.nouvelleVitesse(new PointSam(this.getVitesse().getX(), -this.getVitesse().getY()/100));
-			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-this.SAUT_ACCELERATION/6));
-			//System.out.println("Acc�l�ration ===> "+this.getAcceleration().getY());
+			super.nouvelleAcceleration(new PointSam(this.getAcceleration().getX(), this.getAcceleration().getY()-Blob.SAUT_ACCELERATION/6));
 		}
 		if(this.getPosition().getX()*Pane.width<=0 ){
 			if(this.getPosition().getX()== 0){
