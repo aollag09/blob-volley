@@ -98,6 +98,8 @@ public class Serveur implements Runnable {
 		try {
 			JFrame attente = new JFrame();
 			attente.add(new JLabel("En attente d'une connexion..."));
+			attente.pack();
+			attente.setLocationRelativeTo(null);
 			attente.setVisible(true);
 			this.server.accept();
 			attente.dispose();
