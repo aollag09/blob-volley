@@ -43,7 +43,7 @@ public class Pane extends JPanel implements KeyListener {
 		ActionListener al = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				Blob.instanceServeur.nextPosition(ordre);
+				Blob.instanceClient.nextPosition(ordre);
 				Balle.instance.nextPosition();
 				if (ordre == IServeur.ORDRE_SAUT)
 					ordre = IServeur.ORDRE_RESTE;
