@@ -28,15 +28,25 @@ public class Main {
 		Main.partieEnCours = new Partie();
 		Main.jeuEnCours = true;
 		
-		JFrame f = new JFrame();
-		f.add(Pane.instance);
-		f.setTitle("Blob Volley");
-		f.addKeyListener(Pane.instance);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setSize(1060,525);
-		f.setVisible(true);
+		JFrame menu = new JFrame();
+		menu.add(new Menu());
+		menu.setTitle("Blob Volley");
+		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
-		f.setIconImage(ic.getImage());
+		menu.setIconImage(ic.getImage());
+		menu.pack();
+		menu.setLocationRelativeTo(null);
+		menu.setVisible(true);
+		
+//		JFrame f = new JFrame();
+//		f.add(Pane.instance);
+//		f.setTitle("Blob Volley");
+//		f.addKeyListener(Pane.instance);
+//		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		f.setSize(1060,525);
+//		f.setVisible(true);
+//		ImageIcon ic= new ImageIcon(Blob.LINK_BLOB_SERVEUR);
+//		f.setIconImage(ic.getImage());
 	}
 }
 
