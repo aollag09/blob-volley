@@ -137,6 +137,26 @@ public class Balle extends Mobile{
 						this.nouvelleVitesse(new PointSam(super.getVitesse().getX(),-super.getVitesse().getY()));
 						hasTouched = true;
 					}
+					if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) >= 1 ){
+						/* La balle est tombée par terre */
+						super.setPosition(new PointSam(super.getPosition().getX(), 1-Balle.BALLE_HAUTEUR));
+						super.setVitesse(new PointSam(0,0));
+						super.setAcceleration(new PointSam(0,0));
+						/* On donne un point au gagnant en fonction de la position de la balle */
+						if(super.getPosition().getX()<0.5)
+							Main.partieEnCours.clientMarque();
+						else
+							Main.partieEnCours.serveurMarque();
+
+						if((super.getPosition().getY()+Balle.BALLE_HAUTEUR) == 1 ){
+							try{
+								Thread.sleep(50);
+							}catch (Exception e) {}
+						}
+
+						/* On relance la balle */
+						this.repositionnerBalle();
+					}
 
 				}
 
