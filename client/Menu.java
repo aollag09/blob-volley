@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -53,6 +55,20 @@ public class Menu extends JPanel {
 
 		JPanel corpsServeur = new JPanel();
 		corpsServeur.setLayout(new FlowLayout());
+		
+		String votreIP = "IP local : ";
+		InetAddress address;
+		try {
+			address = InetAddress.getLocalHost();
+			votreIP+= address.getHostAddress();
+			
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		JLabel ip2 = new JLabel(votreIP);
+		corpsServeur.add(ip2);
 
 		JLabel port = new JLabel("Port : ");
 		corpsServeur.add(port);
