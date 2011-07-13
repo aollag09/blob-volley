@@ -100,6 +100,10 @@ public class Serveur implements Runnable {
 			t.start();
 		}
 	}
+	
+	public void setOrdreLocal(int o){
+		this.ordreLocal = o;
+	}
 
 	/**
 	 * Thread runnable pour mettre le serveur en multithreading.
@@ -131,14 +135,12 @@ public class Serveur implements Runnable {
 			Timer time = new Timer(IServeur.DELAY, lAction);
 			time.start();
 
-
+			
 			while (Main.jeuEnCours){
-
-				this.client = this.server.accept();
 
 				BufferedReader reader = new BufferedReader(new InputStreamReader(this.client.getInputStream()));
 				String ligne;
-
+				
 				while ((ligne = reader.readLine()) != null) {
 					/* Envoi des informations des positions */
 					String[] coordonnees = new String[3];
