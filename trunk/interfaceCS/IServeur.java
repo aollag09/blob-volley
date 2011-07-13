@@ -77,10 +77,6 @@ public class IServeur {
 	 */
 	public IServeur(){
 		this.local = SERVEUR_LOCAL;
-		this.addr = "localhost";
-		this.port = Main.port;
-		
-		demarrage();
 	}
 	
 	/**
@@ -94,6 +90,7 @@ public class IServeur {
 		this.port = port;
 		
 		demarrage();
+		
 	}
 	
 	/**

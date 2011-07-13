@@ -16,6 +16,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import serveur.Serveur;
+
 
 public class Pane extends JPanel implements KeyListener {
 
@@ -44,7 +46,14 @@ public class Pane extends JPanel implements KeyListener {
 		ActionListener al = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				if (Main.iserveur.getTypeServeur()==IServeur.SERVEUR_DISTANT)
+					Main.iserveur.envoyerDonnees(ordre);
+				else
+					Serveur.serveur.setOrdreLocal(ordre);
+				System.out.println("TEEEEST");
 				repaint();
+				if (ordre == IServeur.ORDRE_SAUT)
+                    ordre = IServeur.ORDRE_RESTE;
 			}
 		};
 		Timer time = new Timer(IServeur.DELAY, al);
@@ -57,6 +66,7 @@ public class Pane extends JPanel implements KeyListener {
 		width = getWidth();
 		height = getHeight();
 
+		System.out.println("w " + width + "  h " + height);
 		/* Création du terrain */
 
 		/* BackGround */
