@@ -137,13 +137,13 @@ public class IServeur {
 		try {
 			byte[] b = new byte[1000];
 			int bitsRecus = 0;
-			System.out.println("avant read");
+			//System.out.println("avant read");
 			if((bitsRecus = this.iStream.read(b)) >= 0) {
-				System.out.println("dans read");
+				//System.out.println("dans read");
 				coord = new String(b, 0, bitsRecus);
-				System.out.println("coord : " + coord);
+				//System.out.println("coord : " + coord);
 			}
-			System.out.println("apres read");
+			//System.out.println("apres read");
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, "La connexion au serveur n'est plus effective !", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
 		}
@@ -161,25 +161,26 @@ public class IServeur {
 			PointSam balle;
 			try {
 				String[] temp = lesTrois[IServeur.BALLE].split(",");
-				balle = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+				Balle.instance.setPosition(new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1])));
 			} catch (Exception e){
-				balle = new PointSam();
+				Balle.instance.setPosition(new PointSam());
 			}
 			
 			PointSam joueurLocal;
 			try {
 				String[] temp = lesTrois[IServeur.JOUEUR_LOCAL].split(",");
-				joueurLocal = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+				Blob.instanceServeur.setPosition( new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1])));
+				//PointSam balle =  new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
 			} catch (Exception e){
-				joueurLocal = new PointSam();
+				Blob.instanceServeur.setPosition(new PointSam());
 			}
 			
 			PointSam joueurDistant;
 			try {
 				String[] temp = lesTrois[IServeur.JOUEUR_DISTANT].split(",");
-				joueurDistant = new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1]));
+				Blob.instanceClient.setPosition(new PointSam(Double.parseDouble(temp[0]), Double.parseDouble(temp[1])));
 			} catch (Exception e){
-				joueurDistant = new PointSam();
+				Blob.instanceClient.setPosition(new PointSam());
 			}
 			
 			int scoreServeur, scoreClient;
@@ -191,11 +192,17 @@ public class IServeur {
 				scoreServeur = 0;
 				scoreClient = 0;
 			}
+			Main.partieEnCours.setScoreClient(scoreClient);
+			Main.partieEnCours.setScoreServeur(scoreServeur);
+			System.out.println(Balle.instance.getPosition());
+			System.out.println(Blob.instanceClient.getPosition());
+			System.out.println(Blob.instanceServeur.getPosition());
+			System.out.println("=====================================");
 			
 			PointSam[] coordour = new PointSam[3];
-			coordour[IServeur.BALLE] = balle;
-			coordour[IServeur.JOUEUR_DISTANT] = joueurDistant;
-			coordour[IServeur.JOUEUR_LOCAL] = joueurLocal;
+			coordour[IServeur.BALLE] = Balle.instance.getPosition();
+			coordour[IServeur.JOUEUR_DISTANT] = Blob.instanceClient.getPosition();
+			coordour[IServeur.JOUEUR_LOCAL] = Blob.instanceServeur.getPosition();
 			Object[] retour = new Object[2];
 			retour[0] = coordour;
 			int[] scores = new int[2];
